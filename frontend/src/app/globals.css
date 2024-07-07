@@ -4,7 +4,7 @@
 
   @layer base {
     :root {
-      --background: 0 0% 100%;
+      --background: #EAF0FF;
       --foreground: 222.2 84% 4.9%;
 
       --card: 0 0% 100%;
@@ -73,4 +73,9 @@
     body {
       @apply bg-background text-foreground;
     }
+  }
+
+  body {
+    background-color: #EAF0FF;
+    color: #2C3447;
   }

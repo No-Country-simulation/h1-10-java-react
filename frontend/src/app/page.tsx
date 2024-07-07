@@ -1,9 +1,7 @@
 
-
 export default function Home() {
   return (
-    <main className=''>
- 
-    </main>
+    <main className='container mx-auto'>
+     </main>
   )
 }

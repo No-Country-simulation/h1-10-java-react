@@ -18,10 +18,10 @@ import java.util.UUID;
 @AllArgsConstructor
 @Table(name = "pacientes")
 @Entity
-public class Paciente implements Serializable {
+public class Patient implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID idPaciente;
+    private UUID idPatient;
 
     private String nombre;
 
@@ -39,11 +39,6 @@ public class Paciente implements Serializable {
     @Column(name = "factor_sanguineo")
     private String factorSanguineo;
 
-    //SEXO
-    /*
-    * podria un entero
-    * podria ser un Enum
-    * podria ser un  (M/F)
-    *
-    */
+    private char sexo;
+
 }

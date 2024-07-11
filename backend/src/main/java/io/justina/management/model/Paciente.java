@@ -18,7 +18,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Table(name = "pacientes")
 @Entity
-public class Patient implements Serializable {
+public class Paciente implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_paciente")

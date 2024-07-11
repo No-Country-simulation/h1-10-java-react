@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -41,6 +42,10 @@ public class Paciente implements Serializable {
     private String factorSanguineo;
 
     private char sexo;
+
+    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Turno> turnos;
+
     /*
     * posibles relaciones
     * Patologias

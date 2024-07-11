@@ -31,4 +31,8 @@ public class Turno {
 
     @Column(name = "fecha_turno")
     private LocalDateTime fecha;
+
+    @ManyToOne
+    @JoinColumn(name = "id_paciente")
+    private Paciente paciente;
 }

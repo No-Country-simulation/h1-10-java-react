@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/patients")
+@RequestMapping("patients")
 public class PatientController {
 
     @Autowired
     PatientServiceImpl patientService;
 
-    @GetMapping
+    @GetMapping("/todoslospacientes")
     public ResponseEntity<List<Patient>> findAll() {
         List<Patient> patientList = patientService.getAllPatients();
         return new ResponseEntity<>(patientList, HttpStatus.OK);

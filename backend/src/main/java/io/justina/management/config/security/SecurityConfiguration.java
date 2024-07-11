@@ -36,7 +36,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/").permitAll()
                         .requestMatchers(HttpMethod.POST, "v1/api/login", "v1/api/user/register").permitAll()
                         .requestMatchers(HttpMethod.GET, "v1/api/user/getAll", "v1/api/user/**").hasAnyRole("ADMIN")//hasRole("ADMIN")
-                        .requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
+                        .requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**","/api/swagger-ui/**").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

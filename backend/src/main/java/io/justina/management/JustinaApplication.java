@@ -1,5 +1,6 @@
 package io.justina.management;
 
+import io.justina.management.config.security.SecurityConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

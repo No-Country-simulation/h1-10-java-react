@@ -1,4 +1,4 @@
-package io.justina.management.controller.Patient;
+package io.justina.management.controller.patient;
 
 import io.justina.management.model.Patient;
 import io.justina.management.service.patient.PatientServiceImpl;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("patients")
+@RequestMapping("v1/api/patient")
 public class PatientController {
 
     @Autowired

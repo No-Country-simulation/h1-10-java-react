@@ -21,6 +21,7 @@ import java.util.UUID;
 public class Patient implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id_paciente")
     private UUID idPatient;
 
     private String nombre;
@@ -40,5 +41,12 @@ public class Patient implements Serializable {
     private String factorSanguineo;
 
     private char sexo;
-
+    /*
+    * posibles relaciones
+    * Patologias
+    * Personal Medico
+    * Tratamiento
+    * Financiadores
+    * Paciente
+    * */
 }

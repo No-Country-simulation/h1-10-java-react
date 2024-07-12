@@ -35,7 +35,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET, "/", "v1/api/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "v1/api/login", "v1/api/user/register").permitAll()
-                        .requestMatchers(HttpMethod.GET, "v1/api/user/getAll", "v1/api/user/**").hasAnyRole("ADMIN")//hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "v1/api/user/getAll", "v1/api/user/**", "v1/api/patient/**").hasAnyRole("ADMIN")//hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "v1/api/medical-staff/register").permitAll()
                         .requestMatchers(HttpMethod.GET, "v1/api/medical-staff/getAll").hasAnyRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "v1/api/medical-staff/**").hasAnyRole("ADMIN", "MEDICAL_STAFF")

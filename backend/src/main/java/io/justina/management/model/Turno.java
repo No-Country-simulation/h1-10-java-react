@@ -35,4 +35,9 @@ public class Turno {
     @ManyToOne
     @JoinColumn(name = "id_paciente")
     private Paciente paciente;
+
+    /*
+    * AGREGAR DESCRIPCION PARA EL TURNO
+    *
+    * */
 }

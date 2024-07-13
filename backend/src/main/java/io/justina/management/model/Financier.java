@@ -15,9 +15,9 @@ import java.util.UUID;
 @AllArgsConstructor
 @Table(name = "financiadores")
 @Entity
-public class Financiador {
+public class Financier {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_financiador")
-    private UUID idFinanciador;
+    private UUID idFinancier;
 }

@@ -81,8 +81,3 @@ body {
   color: #2C3447;
 }
 
-#sidebarMobileCheckbox:checked~ .container-sidebar {
-  left: 0 !important;
-  /* O la cantidad de píxeles que desees mover */
-  background-color: red;
-}

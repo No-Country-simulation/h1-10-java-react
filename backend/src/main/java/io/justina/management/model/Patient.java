@@ -19,32 +19,32 @@ import java.util.UUID;
 @AllArgsConstructor
 @Table(name = "pacientes")
 @Entity
-public class Paciente implements Serializable {
+public class Patient implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_paciente")
     private UUID idPatient;
 
-    private String nombre;
+    private String name;
 
-    private String apellido;
+    private String lastname;
 
     @Column(name = "numero_documento")
-    private String numeroDocumento;
+    private String idNumber;
 
     @Column(name = "fecha_nacimiento")
-    private LocalDate fechaNacimiento;
+    private LocalDate birthDate;
 
     @Column(name = "grupo_sanguineo")
-    private String grupoSanguineo;
+    private String bloodType;
 
     @Column(name = "factor_sanguineo")
-    private String factorSanguineo;
+    private String bloodFactor;
 
-    private char sexo;
+    private char sex;
 
-    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Turno> turnos;
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Appointment> appointments;
 
     /*
     * posibles relaciones

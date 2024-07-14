@@ -42,7 +42,7 @@ public class TokenService implements ITokenService {
                         .withClaim("authorities", getRoles(user))
                         .withExpiresAt(generateExpirationDate())
                         .sign(algorithm);
-                } else if (object instanceof MedicalStaff medicalStaff){
+            } else if (object instanceof MedicalStaff medicalStaff){
                 return jwtBuilder
                         .withSubject(medicalStaff.getEmail())
                         .withClaim("id", medicalStaff.getId())
@@ -50,8 +50,8 @@ public class TokenService implements ITokenService {
                         .withExpiresAt(generateExpirationDate())
                         .sign(algorithm);
             } else{
-                    throw new IllegalArgumentException("Unsupported entity type for generating token.");
-                }
+                throw new IllegalArgumentException("Unsupported entity type for generating token.");
+            }
 
         }catch (JWTCreationException exception){
             throw new RuntimeException("Failed to create token.");

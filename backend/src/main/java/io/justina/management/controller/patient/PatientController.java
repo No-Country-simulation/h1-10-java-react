@@ -1,6 +1,6 @@
 package io.justina.management.controller.patient;
 
-import io.justina.management.model.Paciente;
+import io.justina.management.model.Patient;
 import io.justina.management.service.patient.PatientServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,8 +19,8 @@ public class PatientController {
     PatientServiceImpl patientService;
 
     @GetMapping("/patients")
-    public ResponseEntity<List<Paciente>> findAll() {
-        List<Paciente> patientList = patientService.getAllPatients();
+    public ResponseEntity<List<Patient>> findAll() {
+        List<Patient> patientList = patientService.getAllPatients();
         return new ResponseEntity<>(patientList, HttpStatus.OK);
     }
 }

@@ -16,23 +16,28 @@ import java.util.UUID;
 @AllArgsConstructor
 @Table(name = "turnos")
 @Entity
-public class Turno {
+public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_turno")
-    private UUID idTurno;
+    private UUID idAppointment;
 
-    private String especialidad;
+    private String speciality;
 
-    private String profesional;
+    private String professional;
 
     @Column(name= "centro_atencion")
-    private String centro;
+    private String healthCenter;
 
     @Column(name = "fecha_turno")
-    private LocalDateTime fecha;
+    private LocalDateTime date;
 
     @ManyToOne
     @JoinColumn(name = "id_paciente")
-    private Paciente paciente;
+    private Patient patient;
+
+    /*
+    * AGREGAR DESCRIPCION PARA EL TURNO
+    *
+    * */
 }

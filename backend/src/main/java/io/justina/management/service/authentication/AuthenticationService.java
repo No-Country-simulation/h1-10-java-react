@@ -50,7 +50,7 @@ public class AuthenticationService implements UserDetailsService, IAuthenticatio
         }
         return userDetails;
     }
- @Override
+    @Override
     public DataJWTTokenDTO authenticate(UserAuthenticateDataDTO userAuthenticateDataDTO){
         Authentication authenticationToken = new UsernamePasswordAuthenticationToken(userAuthenticateDataDTO.getEmail(), userAuthenticateDataDTO.getPassword());
         var entityAuth = authenticationManager.authenticate(authenticationToken).getPrincipal();
@@ -73,8 +73,8 @@ public class AuthenticationService implements UserDetailsService, IAuthenticatio
 
     @Override
     public boolean isAuthenticatedUserOwner(Long id) {
-    Long authenticatedUserId = getAuthenticatedUserId();
-    return authenticatedUserId.equals(id);
+        Long authenticatedUserId = getAuthenticatedUserId();
+        return authenticatedUserId.equals(id);
     }
 
     @Override

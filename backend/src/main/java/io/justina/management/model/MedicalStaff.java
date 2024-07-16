@@ -20,8 +20,6 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-//@DiscriminatorValue("MEDICAL_STAFF")
-
 @Table(name = "medical_staff")
 public class MedicalStaff implements UserDetails {
 

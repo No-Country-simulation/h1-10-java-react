@@ -9,4 +9,6 @@ public interface IMedicalStaffService {
     MedicalStaffResponseDTO registerMedicalStaff(MedicalStaffRegisterDTO medicalStaffRegisterDTO);
     MedicalStaffResponseDTO getMedicalStaffById(Long id);
     List<MedicalStaffResponseDTO> getAllMedicalStaff();
+    void deactivateMedicalStaff(Long id);
+    List<MedicalStaffResponseDTO> getMedicalStaffByActive();
 }

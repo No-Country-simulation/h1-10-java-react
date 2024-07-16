@@ -54,4 +54,22 @@ public class MedicalStaffService implements IMedicalStaffService{
         Type listType = new org.modelmapper.TypeToken<List<MedicalStaffResponseDTO>>() {}.getType();
         return modelMapper.map(medicalStaffs, listType);
     }
+    @Transactional
+    @Override
+    public void deactivateMedicalStaff(Long id) {
+        Optional<MedicalStaff> medicalStaff = medicalStaffRepository.findById(id);
+        if(medicalStaff.isPresent()){
+            medicalStaff.get().setActive(false);
+            medicalStaffRepository.save(medicalStaff.get());
+        }else{
+            throw new RuntimeException("Medical Staff not found with id: " + id);
+        }
+
+    }
+    @Override
+    public List<MedicalStaffResponseDTO> getMedicalStaffByActive() {
+        List<MedicalStaff> medicalStaffs = medicalStaffRepository.findByActiveTrue();
+        Type listType = new org.modelmapper.TypeToken<List<MedicalStaffResponseDTO>>() {}.getType();
+        return modelMapper.map(medicalStaffs, listType);
+    }
 }

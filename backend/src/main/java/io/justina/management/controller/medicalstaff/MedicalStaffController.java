@@ -32,17 +32,36 @@ public class MedicalStaffController {
         MedicalStaffResponseDTO medicalStaff = medicalStaffService.registerMedicalStaff(medicalStaffRegisterDTO);
         return ResponseEntity.ok(medicalStaff);
     }
+
     @GetMapping("/getAll")
     @Operation(summary = "Get all medical staff")
     public ResponseEntity<List<MedicalStaffResponseDTO>> getAllMedicalStaff(){
         return ResponseEntity.ok(medicalStaffService.getAllMedicalStaff());
     }
+    @GetMapping("/getActive")
+    @Operation(summary = "Get all active medical staff")
+    public ResponseEntity<List<MedicalStaffResponseDTO>> getMedicalStaffByActive(){
+        return ResponseEntity.ok(medicalStaffService.getMedicalStaffByActive());
+    }
+
+
     @GetMapping("/{id}")
     @Operation(summary = "Get medical staff by id")
     public ResponseEntity<MedicalStaffResponseDTO> getMedicalStaffById(@PathVariable Long id){
         try {
             authenticationService.verifyUserAccess(id);
             return ResponseEntity.ok(medicalStaffService.getMedicalStaffById(id));
+        } catch (AccessDeniedException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+    @DeleteMapping("delete/{id}")
+    @Operation(summary = "Deactivate medical staff by id")
+    public ResponseEntity<Void> deactivateMedicalStaff(@PathVariable Long id){
+        try {
+            authenticationService.verifyUserAccess(id);
+            medicalStaffService.deactivateMedicalStaff(id);
+            return ResponseEntity.ok().build();
         } catch (AccessDeniedException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }

@@ -1,8 +1,0 @@
-services:
-  - type: web
-    name: justina
-    runtime: docker
-    plan: free
-    buildCommand: ./mvnw clean install
-    startCommand: java -jar target/justina.jar
-

@@ -41,6 +41,9 @@ public class Patient implements Serializable {
     @Column(name = "factor_sanguineo")
     private String bloodFactor;
 
+    @Column(name = "activo")
+    private Boolean active;
+
     private char sex;
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

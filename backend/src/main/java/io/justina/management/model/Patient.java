@@ -25,8 +25,10 @@ public class Patient implements Serializable {
     @Column(name = "id_paciente")
     private UUID idPatient;
 
+    @Column(name = "nombre")
     private String name;
 
+    @Column(name = "apellido")
     private String lastname;
 
     @Column(name = "numero_documento")

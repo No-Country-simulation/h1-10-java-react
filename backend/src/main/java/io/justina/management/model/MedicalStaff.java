@@ -46,6 +46,10 @@ public class MedicalStaff implements UserDetails {
     @Column(name = "activo")
     private Boolean active;
 
+    @OneToMany(mappedBy = "professional")
+    private List<Appointment> appointments;
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();

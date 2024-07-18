@@ -44,6 +44,7 @@ public class Patient implements Serializable {
     @Column(name = "activo")
     private Boolean active;
 
+    @Column(name = "sexo")
     private char sex;
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

@@ -20,4 +20,10 @@ public class Financier {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_financiador")
     private UUID idFinancier;
+
+    @Column(name = "nombre")
+    private String name;
+    @Column(name = "plan")
+    private String plan;
+
 }

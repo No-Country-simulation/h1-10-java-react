@@ -25,9 +25,8 @@ public class PatientServiceImpl implements PatientService{
 
     @Override
     public List<PatientResponseDTO> getAllPatients() {
-/*        modelMapper.typeMap(Patient.class, PatientResponseDTO.class).addMappings(mapper ->
+        modelMapper.typeMap(Patient.class, PatientResponseDTO.class).addMappings(mapper ->
                 mapper.map(src -> src.getUser().getFirstName(), PatientResponseDTO::setFirstName));
-        */
             return patientRepository.findAll().stream()
                     .map(patient -> modelMapper.map(patient, PatientResponseDTO.class))
                     .toList();

@@ -1,9 +1,12 @@
 package io.justina.management.service.patient;
 
+import io.justina.management.config.mapper.ModelMapperConfig;
+import io.justina.management.dto.patient.PatientResponseDTO;
 import io.justina.management.model.MedicalStaff;
 import io.justina.management.model.Patient;
 import io.justina.management.repository.PatientRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +20,17 @@ public class PatientServiceImpl implements PatientService{
     @Autowired
     PatientRepository patientRepository;
 
+    @Autowired
+    ModelMapper modelMapper;
+
     @Override
-    public List<Patient> getAllPatients() {
-        return patientRepository.findAll();
+    public List<PatientResponseDTO> getAllPatients() {
+/*        modelMapper.typeMap(Patient.class, PatientResponseDTO.class).addMappings(mapper ->
+                mapper.map(src -> src.getUser().getFirstName(), PatientResponseDTO::setFirstName));
+        */
+            return patientRepository.findAll().stream()
+                    .map(patient -> modelMapper.map(patient, PatientResponseDTO.class))
+                    .toList();
     }
 
     @Override

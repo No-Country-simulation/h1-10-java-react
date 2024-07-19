@@ -1,7 +1,8 @@
 package io.justina.management.controller.patient;
 
+import io.justina.management.dto.patient.PatientResponseDTO;
 import io.justina.management.model.Patient;
-import io.justina.management.service.patient.PatientServiceImpl;
+import io.justina.management.service.patient.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,17 +16,19 @@ import java.util.UUID;
 public class PatientController {
 
     @Autowired
-    PatientServiceImpl patientService;
+    PatientService patientService;
 
-    @GetMapping("/patients")
-    public ResponseEntity<List<Patient>> findAll() {
-        List<Patient> patientList = patientService.getAllPatients();
+    @GetMapping()
+    public ResponseEntity<List<PatientResponseDTO>> findAll() {
+        List<PatientResponseDTO> patientList = patientService.getAllPatients();
         return new ResponseEntity<>(patientList, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
     public ResponseEntity<Patient> findById(@PathVariable UUID id) {
         return new ResponseEntity<>(patientService.getPatientById(id), HttpStatus.OK);
     }
+
     @PostMapping
     public ResponseEntity<Patient> createPatient(Patient patient) {
         Patient createdPatient = patientService.createPatient(patient);

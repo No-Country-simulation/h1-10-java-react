@@ -19,17 +19,15 @@ import java.util.UUID;
 @AllArgsConstructor
 @Table(name = "pacientes")
 @Entity
-public class Patient implements Serializable {
+public class Patient implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_paciente")
     private UUID idPatient;
 
-    @Column(name = "nombre")
-    private String name;
-
-    @Column(name = "apellido")
-    private String lastname;
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
     @Column(name = "numero_documento")
     private String idNumber;

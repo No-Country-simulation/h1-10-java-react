@@ -1,5 +1,6 @@
 package io.justina.management.model;
 
+import io.justina.management.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,14 +25,21 @@ public class User implements UserDetails {
     private String firstName;
     @Column(name = "apellido")
     private String lastName;
+    @Enumerated(EnumType.STRING)
+    private Role role;
     @Column(name = "email")
     private String email;
     @Column(name = "password")
     private String password;
+    @Column(name = "activo")
+    private Boolean active;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private MedicalStaff medicalStaff;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override
@@ -63,4 +71,5 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

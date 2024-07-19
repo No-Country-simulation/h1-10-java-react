@@ -17,9 +17,7 @@ public class MedicalStaffRegisterDTO {
     private String password;
     private String phone;
     private Integer medicalRegistrationNumber;
-    private Specialty specialty;
+    private Specialty specialities;
     private String description;
     private Boolean active;
-
-
 }

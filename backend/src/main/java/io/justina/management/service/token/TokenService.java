@@ -7,8 +7,8 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import io.justina.management.model.MedicalStaff;
 import io.justina.management.model.User;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,40 +18,28 @@ import java.time.ZoneOffset;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Getter
 @Service
 public class TokenService implements ITokenService {
+
     @Value("${api.security.secret}")
     private String apiSecret;
 
-    public String getApiSecret() {
-        return apiSecret;
-    }
-
-
-    public String generateToken(Object object){
-        if(object == null){
-            throw new IllegalArgumentException("Object cannot be null");
+    public String generateToken(User user){
+        if(user == null){
+            throw new IllegalArgumentException("User cannot be null");
         }
         try{
             Algorithm algorithm = Algorithm.HMAC256(apiSecret);
             JWTCreator.Builder jwtBuilder = JWT.create().withIssuer("justina.io");
-            if(object instanceof User user){
-                return jwtBuilder
+            return jwtBuilder
                         .withSubject(user.getEmail())
                         .withClaim("id", user.getId())
+                        .withClaim("role", user.getRole().name())
                         .withClaim("authorities", getRoles(user))
                         .withExpiresAt(generateExpirationDate())
                         .sign(algorithm);
-            } else if (object instanceof MedicalStaff medicalStaff){
-                return jwtBuilder
-                        .withSubject(medicalStaff.getEmail())
-                        .withClaim("id", medicalStaff.getId())
-                        .withClaim("authorities", getRoles(medicalStaff))
-                        .withExpiresAt(generateExpirationDate())
-                        .sign(algorithm);
-            } else{
-                throw new IllegalArgumentException("Unsupported entity type for generating token.");
-            }
+
 
         }catch (JWTCreationException exception){
             throw new RuntimeException("Failed to create token.");
@@ -80,18 +68,11 @@ public class TokenService implements ITokenService {
         return verifier.getSubject();
     }
 
-    private List<String> getRoles(Object object){
-        if(object instanceof User user){
-            return user.getAuthorities().stream()
+    private List<String> getRoles(User user){
+        return user.getAuthorities().stream()
                     .map(GrantedAuthority::getAuthority)
                     .collect(Collectors.toList());
-        } else if (object instanceof MedicalStaff medicalStaff){
-            return medicalStaff.getAuthorities().stream()
-                    .map(GrantedAuthority::getAuthority)
-                    .collect(Collectors.toList());
-        } else{
-            throw new IllegalArgumentException("Unsupported entity type for generating token.");
-        }
+
     }
 
     public boolean hasRol(String token, String role){

@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,7 +17,6 @@ public class MedicalStaffResponseDTO {
     private String email;
     private String phone;
     private Integer medicalRegistrationNumber;
-    private Specialty specialty;
+    private Set<Specialty> specialities;
     private String description;
-    private Boolean active;
 }

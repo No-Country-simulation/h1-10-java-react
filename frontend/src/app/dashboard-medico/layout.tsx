@@ -10,9 +10,9 @@ import 'react-modern-drawer/dist/index.css'
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const rutasMedico = [
-    { texto: 'Mi perfil', href: '/dashboard-medico', icon: <UserIcon /> },
-    { texto: 'Pacientes', href: '/dashboard-medico/pacientes', icon: <UserIcon /> },
-    { texto: 'Turnos', href: '/dashboard-medico/turnos', icon: <UserIcon /> },
+    { texto: 'Turnos', href: '/dashboard-medico', icon: <UserIcon /> },
+    { texto: 'Mi perfil', href: '/dashboard-medico/mi-perfil', icon: <UserIcon /> },
+    { texto: 'Pacientes', href: '/dashboard-medico/pacientes', icon: <UserIcon /> }
   ]
 
   const [isOpen, setIsOpen] = useState(false)
@@ -39,9 +39,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             })}
           </SideBar>
         </Drawer>
-        <ContainerData>
-          {children}
-        </ContainerData>
+        <ContainerData>{children}</ContainerData>
       </section>
       <span className='fixed bottom-4 right-4 lg:hidden'>
         <Button onClick={toggleDrawer}>

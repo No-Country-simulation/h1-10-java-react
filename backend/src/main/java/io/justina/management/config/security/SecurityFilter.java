@@ -20,7 +20,10 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.Collection;
-
+/**
+ * Filtro de seguridad para validar y establecer la autenticación basada en tokens JWT.
+ * Extiende OncePerRequestFilter para garantizar que se ejecute una vez por cada solicitud.
+ */
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
 
@@ -28,76 +31,59 @@ public class SecurityFilter extends OncePerRequestFilter {
     private final UserRepository userRepository;
     private final MedicalStaffRepository medicalStaffRepository;
 
+    /**
+     * Constructor que inicializa el filtro de seguridad con los servicios necesarios.
+     *
+     * @param tokenService           Servicio para operaciones relacionadas con tokens JWT
+     * @param userRepository         Repositorio de usuarios para la autenticación de roles de administrador
+     * @param medicalStaffRepository Repositorio de personal médico para la autenticación de roles de doctor
+     */
     @Autowired
     public SecurityFilter(TokenService tokenService, UserRepository userRepository, MedicalStaffRepository medicalStaffRepository) {
         this.tokenService = tokenService;
         this.userRepository = userRepository;
         this.medicalStaffRepository = medicalStaffRepository;
     }
+    /**
+     * Implementación del filtro de seguridad para validar y establecer la autenticación basada en tokens JWT.
+     *
+     * @param request     Objeto HttpServletRequest que representa la solicitud HTTP entrante
+     * @param response    Objeto HttpServletResponse que representa la respuesta HTTP saliente
+     * @param filterChain Cadena de filtros para continuar el procesamiento de la solicitud
+     * @throws ServletException Si hay un error de servlet
+     * @throws IOException      Si hay un error de E/S
+     */
     public void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");
+        System.out.println("This is filter begin");
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.replace("Bearer ", "");
             String subject = tokenService.getSubject(token);
-
             if (subject != null) {
-                User user = userRepository.findByEmail(subject);
-                if (user != null) {
-                    Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
-                    if (isAdmin(authorities)) {
+                if(tokenService.hasRol(token, "ROLE_ADMIN")){
+                    User user = userRepository.findByEmail(subject);
+                    System.out.println("This is user: " + user);
+                    if (user != null) {
+                        Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
                         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
                         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                         SecurityContextHolder.getContext().setAuthentication(authentication);
-                    } else {
-                        MedicalStaff medicalStaff = medicalStaffRepository.findByUser_Email(subject);
-                        if (medicalStaff != null && isDoctor(authorities)) {
-                            Collection<? extends GrantedAuthority> doctorAuthorities = medicalStaff.getUser().getAuthorities();
-                            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(medicalStaff, null, doctorAuthorities);
-                            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                            SecurityContextHolder.getContext().setAuthentication(authentication);
-                        }
+                    }
+                } else if(tokenService.hasRol(token, "ROLE_DOCTOR")){
+                    MedicalStaff medicalStaff = medicalStaffRepository.findByUser_Email(subject);
+                    System.out.println("This is doctor: " + medicalStaff);
+                    if (medicalStaff != null) {
+                        Collection<? extends GrantedAuthority> authorities = medicalStaff.getUser().getAuthorities();
+                        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(medicalStaff, null, authorities);
+                        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                        SecurityContextHolder.getContext().setAuthentication(authentication);
                     }
                 }
+
             }
         }
         filterChain.doFilter(request, response);
     }
 
-    private boolean isAdmin(Collection<? extends GrantedAuthority> authorities) {
-        return authorities.stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"));
-    }
-
-    private boolean isDoctor(Collection<? extends GrantedAuthority> authorities) {
-        return authorities.stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_DOCTOR"));
-    }
-
-
-
-//    @Override
-//    protected void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
-//
-//        String authHeader = request.getHeader("Authorization");
-//        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-//            String token = authHeader.replace("Bearer ", "");
-//            String subject = tokenService.getSubject(token);
-//
-//            if (subject != null) {
-//                User user = userRepository.findByEmail(subject);
-//                if (user != null && tokenService.hasRol(token, "ROLE_ADMIN")) {
-//                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-//                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-//                    SecurityContextHolder.getContext().setAuthentication(authentication);
-//                } else {
-//                    MedicalStaff medicalStaff = medicalStaffRepository.findByUser_Email(subject);
-//                    if (medicalStaff != null && tokenService.hasRol(token, "ROLE_DOCTOR")) {
-//                        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(medicalStaff, null, medicalStaff.getUser().getAuthorities());
-//                        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-//                        SecurityContextHolder.getContext().setAuthentication(authentication);
-//                    }
-//                }
-//            }
-//        }
-//        filterChain.doFilter(request, response);
-//    }
 }
 

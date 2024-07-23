@@ -13,49 +13,85 @@ import java.util.List;
 import java.util.UUID;
 
 
+
+/**
+ * Clase que representa a un paciente en el sistema.
+ * Esta clase contiene información personal y médica del paciente, incluyendo su identificación,
+ * datos de usuario asociado, número de documento, fecha de nacimiento, grupo sanguíneo, factor sanguíneo,
+ * estado de activo/inactivo, sexo, citas programadas y otras posibles relaciones médicas.
+ */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "pacientes")
 @Entity
-public class Patient implements Serializable{
+public class Patient implements Serializable {
+
+    /**
+     * Identificador único del paciente.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_paciente")
     private UUID idPatient;
 
+    /**
+     * Usuario asociado a este paciente.
+     */
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
+    /**
+     * Número de documento del paciente.
+     */
     @Column(name = "numero_documento")
     private String idNumber;
 
+    /**
+     * Fecha de nacimiento del paciente.
+     */
     @Column(name = "fecha_nacimiento")
     private LocalDate birthDate;
 
+    /**
+     * Grupo sanguíneo del paciente.
+     */
     @Column(name = "grupo_sanguineo")
     private String bloodType;
 
+    /**
+     * Factor sanguíneo del paciente.
+     */
     @Column(name = "factor_sanguineo")
     private String bloodFactor;
 
+    /**
+     * Estado de activo/inactivo del paciente.
+     */
     @Column(name = "activo")
     private Boolean active;
 
+    /**
+     * Sexo del paciente (M, F, etc.).
+     */
     @Column(name = "sexo")
     private char sex;
 
+    /**
+     * Lista de citas programadas para este paciente.
+     */
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Appointment> appointments;
 
     /*
-    * posibles relaciones
-    * Patologias
-    * Personal Medico
-    * Tratamiento
-    * Financiadores
-    * Paciente
-    * */
+     * Posibles relaciones adicionales que pueden estar presentes en el sistema:
+     * - Patologías
+     * - Personal Médico
+     * - Tratamientos
+     * - Financiadores
+     * - Otros pacientes (relaciones familiares u otros)
+     */
+
 }

@@ -11,9 +11,9 @@ export default function SelectPerfil({
 }: {
   form: any
   Selects: string[]
-  label: string
-  placeholder: string
-  name: string
+  label?: string
+  placeholder?: string
+  name?: string
 }) {
   return (
     <FormField

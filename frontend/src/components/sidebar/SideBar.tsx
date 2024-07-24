@@ -2,11 +2,7 @@
 import React from 'react'
 import HandWelcome from '../iconsComponents/HandWelcome'
 import { Separator } from '@/components/ui/separator'
-import SideBarLink from './SideBarLink'
-import MedicTime from '../iconsComponents/MedicTime'
-import { Button } from '@/components/ui/button'
 import LogoutIcon from '../iconsComponents/LogoutIcon'
-import { RutasProps } from '@/tipos/rutas'
 
 const SideBar = ({ children }: { children: React.ReactNode }) => {
   return (

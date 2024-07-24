@@ -1,11 +1,17 @@
 import React from 'react'
 import { Input } from '../input'
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '../form'
-export default function InputText({ form = [], label = 'Sin label', placeholder = 'Sin nada', name = 'name' }:{
-  form: any,
-  label?: string,
-  placeholder?: string,
-  name?: string
+
+export default function InputText({
+  form = [],
+  label = 'Sin label',
+  placeholder = 'Sin nada',
+  name = 'name'
+}: {
+  form: any
+  label: string
+  placeholder: string
+  name: string
 }) {
   return (
     <FormField

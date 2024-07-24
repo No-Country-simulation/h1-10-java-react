@@ -1,13 +1,13 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import React from 'react'
 import { Toaster } from '@/components/ui/toaster'
 import { z } from 'zod'
 import { toast } from '@/components/ui/use-toast'
 import { Textarea } from '@/components/ui/textarea'
-import { FormValues,Formshema } from '@/app/lib/perfil_actions'
+import { FormValues, Formshema } from '@/app/lib/perfil_actions'
 import TarjetaTurno from '@/components/ui/Perfil/TarjetaTurno'
 import InputText from '@/components/ui/Perfil/InputText'
 import SelectPerfil from '@/components/ui/Perfil/SelectPerfil'
@@ -39,36 +39,65 @@ export default function page() {
       <hr />
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='  space-y-3 '>
+        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-3'>
           <section className='my-7 grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-6'>
             <InputText form={form} label='Nombres/s' name='name' placeholder='Escriba su nombre' />
             <InputText form={form} label='Apellidos' name='last_name' placeholder='Escriba su apellido' />
-            <SelectPerfil form={form} label='Obras social o prepara' Selects={ObrasSocial} name='obra_social' placeholder='Por favor elija uno' />
-            <SelectPerfil form={form} label='Tipos de documentos' Selects={SelectsDocumentos} name='tipo_documento' placeholder='DNI' />
-            <InputText form={form} label='Número de documentos' name='numero_documento' placeholder='Número de documentos' />
+            <SelectPerfil
+              form={form}
+              label='Obras social o prepara'
+              Selects={ObrasSocial}
+              name='obra_social'
+              placeholder='Por favor elija uno'
+            />
+            <SelectPerfil
+              form={form}
+              label='Tipos de documentos'
+              Selects={SelectsDocumentos}
+              name='tipo_documento'
+              placeholder='DNI'
+            />
+            <InputText
+              form={form}
+              label='Número de documentos'
+              name='numero_documento'
+              placeholder='Número de documentos'
+            />
           </section>
 
           <hr />
 
           <section className='mt-7 grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6'>
-            <section className='flex flex-col sm:col-span-2 space-y-12 '>
+            <section className='flex flex-col space-y-12 sm:col-span-2'>
               <TiposSangreRadio form={form} />
             </section>
-            <SelectPerfil form={form} label='Biológicamente soy' Selects={SelectBiologia} name='biologia' placeholder='Seleccionar' />
+            <SelectPerfil
+              form={form}
+              label='Biológicamente soy'
+              Selects={SelectBiologia}
+              name='biologia'
+              placeholder='Seleccionar'
+            />
             <InputText form={form} label='Fecha de nacimiento' name='fecha_nacimiento' placeholder='Dia/Mes/Año' />
-            <SelectPerfil form={form} label='Patologías' Selects={SelectPatologia} name='patologia' placeholder='Seleccionar' />
+            <SelectPerfil
+              form={form}
+              label='Patologías'
+              Selects={SelectPatologia}
+              name='patologia'
+              placeholder='Seleccionar'
+            />
             <FormField
               control={form.control}
               name='tarea_patologia'
               render={({ field }) => (
-                <FormItem className='sm:col-span-3 '>
+                <FormItem className='sm:col-span-3'>
                   <FormLabel className='mb-3'>Mi patología no aparece</FormLabel>
                   <FormControl>
                     <section>
-                      <p className='text-sm pb-1'>Enviar sugerencia</p>
+                      <p className='pb-1 text-sm'>Enviar sugerencia</p>
                       <Textarea
                         placeholder='Aqui puedes agregar tu patologia si no esta.'
-                        className='resize-none '
+                        className='resize-none'
                         {...field}
                       />
                       <FormDescription>
@@ -80,7 +109,6 @@ export default function page() {
                 </FormItem>
               )}
             />
-
           </section>
           <Button type='submit'>Guardar</Button>
         </form>

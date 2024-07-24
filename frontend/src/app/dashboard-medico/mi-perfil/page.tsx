@@ -2,7 +2,7 @@ import SimpleDisplayData from '@/components/SimpleDisplayData.tsx/SimpleDisplayD
 import { Separator } from '@/components/ui/separator'
 import React from 'react'
 
-const MiPerfilMexico = () => {
+const MiPerfilMedico = () => {
   return (
     <div>
       <h3 className='mb-2 text-3xl font-bold'>Mi Perfil</h3>
@@ -48,4 +48,4 @@ const MiPerfilMexico = () => {
   )
 }
 
-export default MiPerfilMexico
+export default MiPerfilMedico

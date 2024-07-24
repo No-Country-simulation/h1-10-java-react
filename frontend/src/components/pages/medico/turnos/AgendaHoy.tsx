@@ -11,7 +11,7 @@ const consultasHoy: turnosProps[] = [
     horario: '15:30',
     paciente: 'Pepito perez',
     tipoConsulta: 'Primera consulta',
-    nota: 'Vengo deribado de otro doctor',
+    nota: 'Vengo derivado de otro doctor',
     status: 'pendiente'
   },
   {
@@ -32,14 +32,14 @@ const consultasHoy: turnosProps[] = [
     horario: '17:00',
     paciente: 'Teo Gutierrez',
     tipoConsulta: 'Primera consulta',
-    nota: 'Vengo deribado de otro doctor',
+    nota: 'Vengo derivado de otro doctor',
     status: 'pendiente'
   }
 ]
 
 const AgendaHoy = () => {
   const [pacienteActivo, setPacienteActivo] = useState('')
-   
+
   return (
     <TabsContent value='agendaHoy' className='w-full'>
       <header className='mb-4 flex items-center gap-2'>
@@ -61,7 +61,7 @@ const AgendaHoy = () => {
             />
           ))}
         </div>
-        <FarmularioContultaActiva  paciente={pacienteActivo}/>
+        <FarmularioContultaActiva paciente={pacienteActivo} />
       </main>
     </TabsContent>
   )

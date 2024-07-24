@@ -5,8 +5,9 @@ import Link from 'next/link'
 import React from 'react'
 
 interface lineaTiempoturnos extends turnosProps {
-  setPacienteActivo: React.Dispatch<React.SetStateAction<string>>
-  pacienteActivo: string
+  setPacienteActivo?: React.Dispatch<React.SetStateAction<string>>
+  pacienteActivo?: string
+  orientacion?: 'vertical' | 'horizontal'
 }
 
 const TurnoLinaeTiempoItem = ({
@@ -16,7 +17,8 @@ const TurnoLinaeTiempoItem = ({
   nota,
   status,
   setPacienteActivo,
-  pacienteActivo
+  pacienteActivo,
+  orientacion = 'vertical'
 }: lineaTiempoturnos) => {
   const colorStatusTurno = {
     pendiente: 'bg-green-300',
@@ -30,8 +32,10 @@ const TurnoLinaeTiempoItem = ({
         <div className={`aspect-square h-4 rounded-full ${colorStatusTurno[status]}`}></div>
         <div className='h-full w-[1px] bg-slate-600'></div>
       </div>
-      <div className={`pb-10 ${pacienteActivo === paciente && 'rounded-md bg-slate-300 px-5 pt-5'} transition-all`}>
-        <div className='flex gap-3'>
+      <div
+        className={`pb-10 ${pacienteActivo === paciente && 'rounded-md bg-slate-300 px-5 pt-5'} flex gap-4 transition-all ${orientacion === 'vertical' ? 'flex-col' : 'flex-row w-full'}`}
+      >
+        <div className={`flex gap-3 ${orientacion === 'horizontal' && 'flex-1'} `}>
           <div>
             <h4 className='text-sm'>Horario</h4>
             <p className='text-lg font-bold'>{horario}</p>
@@ -44,15 +48,15 @@ const TurnoLinaeTiempoItem = ({
             </Link>
           </div>
         </div>
-        <article className='mt-3'>
+        <article className={`${orientacion === 'horizontal' && 'flex-1'}`}>
           <h4 className='text-sm'>Tipo de consulta</h4>
           <p>{tipoConsulta}</p>
         </article>
-        <article className='my-3'>
+        <article className={`${orientacion === 'horizontal' && 'flex-1'}`}>
           <h4 className='text-sm'>Nota:</h4>
           <p>{nota ? nota : 'no hay nota'}</p>
         </article>
-        <Button onClick={() => setPacienteActivo(paciente)}>Atender ahora</Button>
+        {setPacienteActivo && <Button onClick={() => setPacienteActivo(paciente)}>Atender ahora</Button>}
       </div>
     </div>
   )

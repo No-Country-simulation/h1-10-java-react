@@ -13,7 +13,7 @@ const MainDashboard = () => {
       <Tabs defaultValue='agendaHoy' className='w-full'>
         <TabsList className='grid w-full grid-cols-2'>
           <TabsTrigger value='agendaHoy'>Agenda de hoy</TabsTrigger>
-          <TabsTrigger value='agendaSemana'>Agenda de la semana</TabsTrigger>
+          <TabsTrigger value='agendaSemana'>Agenda extendida</TabsTrigger>
         </TabsList>
         <AgendaHoy />
         <AgendaSemana />

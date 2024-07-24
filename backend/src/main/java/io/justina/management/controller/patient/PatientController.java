@@ -1,8 +1,10 @@
 package io.justina.management.controller.patient;
 
+import io.justina.management.dto.patient.PatientRequestDTO;
 import io.justina.management.dto.patient.PatientResponseDTO;
 import io.justina.management.model.Patient;
 import io.justina.management.service.patient.PatientService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,8 +54,8 @@ public class PatientController {
      */
 
     @PostMapping
-    public ResponseEntity<Patient> createPatient(Patient patient) {
-        Patient createdPatient = patientService.createPatient(patient);
+    public ResponseEntity<PatientResponseDTO> createPatient(@RequestBody @Valid PatientRequestDTO patient) {
+        PatientResponseDTO createdPatient = patientService.createPatient(patient);
         return new ResponseEntity<>(createdPatient, HttpStatus.CREATED);
     }
     /**

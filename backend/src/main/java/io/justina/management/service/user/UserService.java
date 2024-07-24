@@ -52,6 +52,9 @@ public class UserService implements IUserService {
     @Override
     @Transactional
     public UserResponseDataDTO registerUser(UserRegisterDataDTO userRegisterDataDTO) {
+        if(userRepository.existsByEmail(userRegisterDataDTO.getEmail())) {
+            throw new RuntimeException("User already exists with email: " + userRegisterDataDTO.getEmail());
+        }
         User user = modelMapper.map(userRegisterDataDTO, User.class);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setActive(true);

@@ -53,7 +53,7 @@ public class User implements UserDetails {
     /**
      * Correo electrónico del usuario (también utilizado como nombre de usuario).
      */
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     /**
@@ -73,6 +73,12 @@ public class User implements UserDetails {
      */
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private MedicalStaff medicalStaff;
+
+    /**
+     * Paciente asociado a este usuario (si aplica).
+     */
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Patient patient;
 
     /**
      * Método para obtener los roles/autoridades del usuario.

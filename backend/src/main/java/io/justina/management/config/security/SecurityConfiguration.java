@@ -54,8 +54,8 @@ public class SecurityConfiguration {
                                 "v1/api/medical-staff/getActive", "v1/api/financier/getAll,",
                                 "v1/api/financier/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "v1/api/medical-staff/**").hasAnyRole("ADMIN", "DOCTOR")
-                        .requestMatchers(HttpMethod.POST, "v1/api/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "v1/api/user/register", "v1/api/medical-staff/register",
+                        .requestMatchers(HttpMethod.POST, "v1/api/user/register","v1/api/login").permitAll()
+                        .requestMatchers(HttpMethod.POST,  "v1/api/medical-staff/register",
                                 "v1/api/financier/").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "v1/api/medical-staff/delete/**").hasAnyRole("ADMIN")
                         .requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**").permitAll()

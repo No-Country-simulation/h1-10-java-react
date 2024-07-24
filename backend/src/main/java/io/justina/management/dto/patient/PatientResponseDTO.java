@@ -14,11 +14,19 @@ public class PatientResponseDTO {
      * Nombre del paciente.
      */
     private String firstName;
+    /**
+     * Apellido del paciente.
+     */
+    private String lastName;
+    /**
+     * Correo electrónico del paciente.
+     */
+    private String email;
 
     /**
      * Número de identificación del paciente.
      */
-    private String idNumber;
+    private String identificationNumber;
 
     /**
      * Fecha de nacimiento del paciente.
@@ -35,10 +43,6 @@ public class PatientResponseDTO {
      */
     private String bloodFactor;
 
-    /**
-     * Indicador de activación del paciente.
-     */
-    private Boolean active;
 
     /**
      * Sexo del paciente.

@@ -1,6 +1,7 @@
 package io.justina.management.service.patient;
 
 
+import io.justina.management.dto.patient.PatientRequestDTO;
 import io.justina.management.dto.patient.PatientResponseDTO;
 import io.justina.management.model.Patient;
 
@@ -33,7 +34,7 @@ public interface PatientService {
      * @param patient Objeto que representa al paciente que se desea crear.
      * @return Objeto Patient creado.
      */
-    Patient createPatient(Patient patient);
+    PatientResponseDTO createPatient(PatientRequestDTO patient);
 
     /**
      * Desactiva a un paciente por su ID.

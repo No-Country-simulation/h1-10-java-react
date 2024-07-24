@@ -10,8 +10,6 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
-
 
 
 /**
@@ -32,9 +30,9 @@ public class Patient implements Serializable {
      * Identificador único del paciente.
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_paciente")
-    private UUID idPatient;
+    private Long idPatient;
 
     /**
      * Usuario asociado a este paciente.
@@ -47,7 +45,7 @@ public class Patient implements Serializable {
      * Número de documento del paciente.
      */
     @Column(name = "numero_documento")
-    private String idNumber;
+    private String identificationNumber;
 
     /**
      * Fecha de nacimiento del paciente.

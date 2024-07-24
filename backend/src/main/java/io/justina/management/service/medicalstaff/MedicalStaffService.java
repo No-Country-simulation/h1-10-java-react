@@ -53,7 +53,7 @@ public class MedicalStaffService implements IMedicalStaffService{
     @Override
     @Transactional
     public MedicalStaffResponseDTO registerMedicalStaff(MedicalStaffRegisterDTO medicalStaffRegisterDTO) {
-        User user = userRepository.findByEmail(medicalStaffRegisterDTO.getEmail());
+        var user = userRepository.findByEmail(medicalStaffRegisterDTO.getEmail());
         if (user == null) {
             user = modelMapper.map(medicalStaffRegisterDTO, User.class);
             user.setPassword(passwordEncoder.encode(user.getPassword()));

@@ -5,10 +5,10 @@ import SideBarLink from '@/components/sidebar/SideBarLink'
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const rutasUser = [
-    { texto: 'Inicio', href: '/dashboard', icon: <UserIcon /> },
-    { texto: 'Usuarios', href: '/dashboard/usuarios', icon: <UserIcon /> },
-    { texto: 'Productos', href: '/dashboard/productos', icon: <UserIcon /> },
-    { texto: 'Ventas', href: '/dashboard/ventas', icon: <UserIcon /> }
+    { texto: 'Inicio', href: '/dashboard-paciente', icon: <UserIcon /> },
+    { texto: 'Perfil', href: '/dashboard-paciente/perfil', icon: <UserIcon /> },
+    { texto: 'Historial', href: '/dashboard-paciente/historial', icon: <UserIcon /> },
+    { texto: 'otros', href: '/dashboard-paciente/ventas', icon: <UserIcon /> }
   ]
 
   return (

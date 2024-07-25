@@ -1,10 +1,8 @@
 'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
 import React, { useState } from 'react'
-import { z } from 'zod';
-import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -14,24 +12,24 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form'
-import { Input } from '@/components/ui/input' 
-import Link from 'next/link'
-import Image from 'next/image'
 import { jwtDecode } from 'jwt-decode'
 import { redirect } from 'next/navigation';
-
+import { z } from 'zod'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import Link from 'next/link'
+import Image from 'next/image'
 
 const formSchema = z.object({
   email: z.string().min(2, {
     message: 'Username must be at least 2 characters'
   }),
-  password: z.string().min(5, {
+  password: z.string().min(8, {
     message: 'Password must be at least 8 characters'
   })
 })
 
 export default function Login() {
-  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -84,8 +82,6 @@ export default function Login() {
           paddingRight: 40,
           paddingTop: 40
         }}
-        />
-
       <span className='font-semibold text-center'>#AyudemosAtodosLosQuePodamos</span>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="  space-y-3 ">
@@ -123,7 +119,6 @@ export default function Login() {
             href={'aqui entrara el link de page olvidaste contraseña'} 
             className='text-xs '>Olvidaste tu contraseña?</Link> <br/>
           <Button type="submit" className='w-full bg-pink-600 py-7 rounded-none'>Ingresar</Button>
-
         </form>
       </Form>
     </section>

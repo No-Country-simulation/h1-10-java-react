@@ -2,7 +2,9 @@ import React from 'react'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '../form'
 import { RadioGroup, RadioGroupItem } from '../radio-group'
 
-export default function TiposSangreRadio({ form = [] }) {
+export default function TiposSangreRadio({ form = [] }:{
+  form: any
+}) {
   return (
     <>
       <FormField

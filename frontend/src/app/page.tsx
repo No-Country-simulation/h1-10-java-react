@@ -1,10 +1,16 @@
 'use client'
-import Login from "@/components/Login/Logear";
-import { useState } from "react";
+
+import Login from '@/components/Login/Logear'
 
 export default function Home() {
-const [logeado,setLOgeado] = useState(false)
-return <main className='container mx-auto' >
-    {!logeado && <Login/> }
-  </main>
+  return (
+    <div className='min-h-screen bg-amber-50'>
+      {/**Imagen de fondo que se puede cambiar */}
+
+      <section className='mx-auto flex max-w-2xl flex-col px-3 pt-10'>
+        <Login />
+        {/** <Register isRegister = { Logearme}/>*/}
+      </section>
+    </div>
+  )
 }

@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
     /**
      * Maneja la excepción {@link ResourceNotFoundException} lanzada cuando un recurso no es encontrado.
      *

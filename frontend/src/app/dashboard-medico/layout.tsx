@@ -1,6 +1,8 @@
 'use client'
 import ContainerData from '@/components/ContainerData/ContainerData'
+import MedicTime from '@/components/iconsComponents/MedicTime'
 import UserIcon from '@/components/iconsComponents/UserIcon'
+import UsersGroupIcon from '@/components/iconsComponents/UsersGroupIcon'
 import SideBar from '@/components/sidebar/SideBar'
 import SideBarLink from '@/components/sidebar/SideBarLink'
 import { Button } from '@/components/ui/button'
@@ -10,9 +12,9 @@ import 'react-modern-drawer/dist/index.css'
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const rutasMedico = [
-    { texto: 'Mi perfil', href: '/dashboard-medico', icon: <UserIcon /> },
-    { texto: 'Pacientes', href: '/dashboard-medico/pacientes', icon: <UserIcon /> },
-    { texto: 'Turnos', href: '/dashboard-medico/turnos', icon: <UserIcon /> },
+    { texto: 'Turnos', href: '/dashboard-medico', icon: <MedicTime /> },
+    { texto: 'Mi perfil', href: '/dashboard-medico/mi-perfil', icon: <UserIcon /> },
+    { texto: 'Pacientes', href: '/dashboard-medico/pacientes', icon: <UsersGroupIcon /> }
   ]
 
   const [isOpen, setIsOpen] = useState(false)
@@ -39,9 +41,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             })}
           </SideBar>
         </Drawer>
-        <ContainerData>
-          {children}
-        </ContainerData>
+        <ContainerData>{children}</ContainerData>
       </section>
       <span className='fixed bottom-4 right-4 lg:hidden'>
         <Button onClick={toggleDrawer}>

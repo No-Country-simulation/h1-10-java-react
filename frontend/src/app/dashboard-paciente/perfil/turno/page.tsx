@@ -24,7 +24,7 @@ export default function Turno() {
     }
   })
 
-  function onSubmit( value:z.inter<typeof Formshema>) {
+  function onSubmit( value:z.infer<typeof Formshema>) {
     console.log('hOLa')
     toast({
       title: 'Excelente, registraste tu consulta con éxito.',

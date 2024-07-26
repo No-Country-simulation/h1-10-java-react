@@ -6,12 +6,16 @@ export default function InputText({
   form = [],
   label = 'Sin label',
   placeholder = 'Sin nada',
-  name = 'name'
+  name = 'name',
+  type = 'text',
+  className = ''
 }: {
   form: any
   label: string
   placeholder: string
   name: string
+  type: string
+  className: string
 }) {
   return (
     <FormField
@@ -21,7 +25,7 @@ export default function InputText({
         <FormItem className='sm:col-span-2'>
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <Input type='text' {...field} placeholder={placeholder} />
+            <Input type={type} {...field} placeholder={placeholder} className={className} />
           </FormControl>
           <FormMessage />
         </FormItem>

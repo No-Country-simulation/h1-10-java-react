@@ -9,6 +9,8 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from '@/components/ui/input'
 import Link from 'next/link'
 import Image from 'next/image'
+import { Toast, ToastProvider } from '../ui/toast'
+import { toast } from '../ui/use-toast'
 
 const formSchema = z.object({
   email: z.string().min(2, {
@@ -27,8 +29,30 @@ export default function Login() {
       password: ''
     }
   })
+const [ErrorMessage, setErrorMessage] = useState('')
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const response = await fetch('https://backend-justina-deploy.onrender.com/v1/api/login',{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(values)
+      })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+      if (!response.ok) {
+        const Message = 'El error es un error de autenticación, revise el correo y la contraseña son correctos'
+        setErrorMessage(Message)
+        throw new Error('Error de autenticación')
+      }
+      const token = await response.json()
+      localStorage.setItem('token', token.jwtToken)
+      console.log(token)
+    } catch (error) {
+      const Message = 'A ocurrido un error, revisa que tu correo y contraseña sean correctas, o puede que tu cuenta no exista'
+        setErrorMessage( Message )
+      console.error('Hubo un error de petición  ', error)
+    }
     console.log(values)
   }
   console.log(formSchema)
@@ -49,7 +73,6 @@ export default function Login() {
           paddingTop: 40
         }}
       />
-
       <span className='text-center font-semibold'>#AyudemosAtodosLosQuePodamos</span>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-3'>
@@ -93,6 +116,12 @@ export default function Login() {
           </Button>
         </form>
       </Form>
+      {ErrorMessage && 
+      <section className='max-w-96 text-white bg-black px-4 py-2 absolute bottom-5 right-5 rounded-sm space-y-3' >
+        <div className='relative'><button onClick={() => setErrorMessage('')} className='absolute font-bold right-0 hover:scale-x-125 transition-transform'>X</button></div> 
+        <h6 className='font-bold'>A ocurrido un error.</h6>
+        <p className='text-sm'>{ErrorMessage}</p>
+      </section>}
     </section>
   )
 }

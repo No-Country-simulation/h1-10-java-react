@@ -70,13 +70,18 @@ public class PatientServiceImpl implements PatientService {
                 .orElseThrow(() -> new IllegalArgumentException("Patient not found"));
     }
 
+    @Override
+    public Patient createPatient(Patient patient) {
+        return null;
+    }
+
     /**
      * Crea un nuevo paciente en el sistema.
      *
      * @param patientRequestDTO Objeto que representa al paciente que se desea crear.
      * @return Objeto Patient creado.
      */
-      @Override
+/*      @Override
       public PatientResponseDTO createPatient(PatientRequestDTO patientRequestDTO){
           var user = userRepository.findByEmail(patientRequestDTO.getEmail());
           if (user == null) {
@@ -101,7 +106,7 @@ public class PatientServiceImpl implements PatientService {
             responseDTO.setLastName(user.getLastName());
             responseDTO.setEmail(user.getEmail());
             return responseDTO;
-      }
+      }*/
 //    @Override
 //    public Patient createPatient(Patient patient) {
 //        return patientRepository.save(patient);

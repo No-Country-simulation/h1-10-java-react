@@ -1,4 +1,6 @@
+
 package io.justina.management.model;
+
 
 import io.justina.management.enums.Specialty;
 import jakarta.persistence.*;
@@ -6,65 +8,66 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-
+/**
+ * Clase que representa al personal médico.
+ * Esta clase contiene información sobre el personal médico, incluyendo su identificación,
+ * usuario asociado, número de teléfono, número de registro médico, especialidad,
+ * descripción y citas programadas.
+ */
 @Getter
 @Setter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "medical_staff")
-public class MedicalStaff implements UserDetails {
+public class MedicalStaff {
 
+    /**
+     * Identificador único del personal médico.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(name = "nombre")
-    private String firstName;
-    @Column(name = "apellido")
-    private String lastName;
-    @Column(name = "email")
-    private String email;
-    @Column(name = "password")
-    private String password;
+    @Column(name = "id_personal_medico")
+    private Long medicalStaffId;
+
+    /**
+     * Usuario asociado a este personal médico.
+     */
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
+    /**
+     * Número de teléfono del personal médico.
+     */
     @Column(name="telefono")
     private String phone;
+
+    /**
+     * Número de registro médico del personal médico.
+     */
     @Column(name = "numero_registro_medico")
     private Integer medicalRegistrationNumber;
+
+    /**
+     * Especialidad(es) del personal médico.
+     */
     @Column(name = "especialidad")
     @Enumerated(EnumType.STRING)
-    private Specialty specialty;
+    private Specialty specialities;
+
+    /**
+     * Descripción del personal médico.
+     */
     @Column(name = "descripcion")
     private String description;
-    @Column(name = "activo")
-    private Boolean active;
 
+    /**
+     * Lista de citas programadas para este personal médico.
+     */
     @OneToMany(mappedBy = "professional")
     private List<Appointment> appointments;
-
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_MEDICAL_STAFF"));
-        return authorities;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return email;
-    }
 
 }

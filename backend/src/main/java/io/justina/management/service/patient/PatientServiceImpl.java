@@ -38,10 +38,7 @@ public class PatientServiceImpl implements PatientService {
         this.passwordEncoder = (BCryptPasswordEncoder) passwordEncoder;
         this.patientRepository = patientRepository;
     }
-
-
     ModelMapper modelMapper = new ModelMapper();
-
     /**
      * Obtiene todos los pacientes registrados en el sistema.
      *
@@ -49,15 +46,17 @@ public class PatientServiceImpl implements PatientService {
      */
     @Override
     public List<PatientResponseDTO> getAllPatients() {
-        // Mapeo personalizado para incluir el nombre del paciente desde el usuario asociado
         modelMapper.typeMap(Patient.class, PatientResponseDTO.class)
-                .addMappings(mapper -> mapper.map(src -> src.getUser().getFirstName(), PatientResponseDTO::setFirstName));
-
+                .addMappings(mapper -> {
+                    mapper.map(src -> src.getUser().getFirstName(), PatientResponseDTO::setFirstName);
+                    mapper.map(src -> src.getUser().getLastName(), PatientResponseDTO::setLastName);
+                    mapper.map(src -> src.getUser().getEmail(), PatientResponseDTO::setEmail);
+                    mapper.map(src -> src.getUser().getActive(), PatientResponseDTO::setActive);
+                });
         return patientRepository.findAll().stream()
                 .map(patient -> modelMapper.map(patient, PatientResponseDTO.class))
                 .toList();
     }
-
     /**
      * Obtiene un paciente por su ID.
      *
@@ -70,7 +69,6 @@ public class PatientServiceImpl implements PatientService {
         return patientRepository.findById(patientId)
                 .orElseThrow(() -> new IllegalArgumentException("Patient not found"));
     }
-
     /**
      * Crea un nuevo paciente en el sistema.
      *
@@ -110,7 +108,6 @@ public class PatientServiceImpl implements PatientService {
 
         return responseDTO;
     }
-
     /**
      * Desactiva a un paciente por su ID.
      *

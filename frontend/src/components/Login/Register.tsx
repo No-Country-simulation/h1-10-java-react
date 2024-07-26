@@ -2,23 +2,24 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { z } from 'zod'
 import { Button } from '@/components/ui/button'
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
+import { Form } from '@/components/ui/form'
 import Image from 'next/image'
+import InputText from '../ui/Perfil/InputText'
+import SelectPerfil from '../ui/Perfil/SelectPerfil'
 
 const formSchema = z.object({
-  name: z
+  firstName: z
     .string()
     .min(3, {
       message: 'Name must be at least 3 characters'
     })
-    .max(10, {
+    .max(15, {
       message: 'Name must be at least 10 characters'
     }),
-  lastname: z
+  lastName: z
     .string()
     .min(3, {
       message: 'Last name must be at least 3 characters'
@@ -26,32 +27,74 @@ const formSchema = z.object({
     .max(15, {
       message: 'Last name must be at least 10 characters'
     }),
+  identificationNumber: z.string().min(3, {
+    message: 'Numero de identificación muy corto' }),
+  email: z.string(),
   password: z.string().min(8, {
     message: 'Password must be at least 8 characters'
   }),
-  email: z.string(),
-  perfil: z.string()
+  // perfil: z.string(),
+  phone: z.string(),
+  address: z.string(),
+  birthDate: z.string(),
+  bloodType: z.string(),
+  bloodFactor: z.string(),
+  sex: z.string()
+
 })
 
 export default function Register({ isRegister: register = true }) {
   const [desplegue, setDesplegue] = useState(false)
+  const [Token, setToken] = useState('')
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
-      lastname: '',
+      firstName: '',
+      lastName: '',
       email: '',
       password: '',
-      perfil: ''
+      // perfil: '',
+      identificationNumber: '',
+      phone: '',
+      address: '',
+      birthDate: '',
+      bloodType: '',
+      bloodFactor: '',
+      sex: '',
     }
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const response = await fetch('https://backend-justina-deploy.onrender.com/v1/api/patient', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${Token}`
+        },
+        body: JSON.stringify(values)
+      })
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      const res = await response.json()
+      console.log(res)
+    } catch (error) {
+      console.error('Ocurio un error ', error)
+    }
     console.log(values)
   }
   console.log(formSchema)
+
+  const tipoSexo = ['M', 'F']
+  const typoSangre = ['A', 'B', 'O', 'AB']
+  const FactorSangre = ['+', '-']
+  useEffect(() => {
+    const token = localStorage.getItem('token') ?? ''
+    setToken(token)
+  },[])
   return (
-    <section className='flex w-full flex-col p-5 text-amber-50' style={{ display: register ? 'flex' : 'none' }}>
+    <section className='flex w-full flex-col p-5 ' style={{ display: register ? 'flex' : 'none' }}>
       {/**Logo que puede cambiar */}
       <Image
         src='/JustinaIO.svg'
@@ -70,61 +113,27 @@ export default function Register({ isRegister: register = true }) {
 
       <span className='text-center font-semibold'>#AyudemosAtodosLosQuePodamos</span>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-3'>
-          <FormField
-            control={form.control}
-            name='name'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Nombre</FormLabel>
-                <FormControl>
-                  <Input type='text' placeholder='Escriba su nombre' className='text-black' {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name='lastname'
-            render={({ field }) => (
-              <FormItem className=''>
-                <FormLabel>Apellido</FormLabel>
-                <FormControl>
-                  <Input type='text' placeholder='Escriba su Apellido' className='text-black' {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name='email'
-            render={({ field }) => (
-              <FormItem className=''>
-                <FormLabel>E-mail</FormLabel>
-                <FormControl>
-                  <Input type='email' placeholder='Escriba su correo' className='text-black' {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name='password'
-            render={({ field }) => (
-              <FormItem className=''>
-                <FormLabel>Contraseña</FormLabel>
-                <FormControl>
-                  <Input type='password' placeholder='Escribe tu contraseña' className='text-black' {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <Button
+        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-3 '>
+          <div className=' my-7 grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-6'>
+            <InputText form={form.control} name='firstName' label='Nombre' placeholder='Escribe su nombre' type='text' className='text-black' />
+            <InputText form={form.control} name='lastName' label='Apellidos' placeholder='Escribe su Apellido' type='text' className='text-black' />
+            <SelectPerfil form={form.control} name='sex' Selects={tipoSexo} label='Elige cual es tu sexo' placeholder='Masculino' />
+          </div>
+          <InputText form={form.control} name='email' label='Email' type='email' placeholder='Escribe su correo' className='text-black' />
+          <InputText form={form.control} name='password' type='password' label='Contraseña' placeholder='Escribe su contraseña' className='text-black' />
+          <div className=' my-7 grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-6'>
+            <InputText form={form.control} name='identificationNumber' label='Numero de identificación' placeholder='Escribe su identificación aquí' type='text' className='text-black' />
+            <InputText form={form.control} name='phone' label='Numero de telefono' placeholder='Escribe el número de telefono' type='text' className='text-black' />
+            <InputText form={form.control} name='address' label='Numero de dirección' placeholder='Escribe su dirección' type='text' className='text-black' />
+          </div>
+          <div className=' my-7 grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-6'>
+            <SelectPerfil form={form.control} name='bloodType' label='Tipo de sangre' placeholder='A' Selects={typoSangre} />
+            <SelectPerfil form={form.control} name='bloodFactor' label='Factor de sangre' placeholder='+' Selects={FactorSangre} />
+            <InputText form={form.control} name='birthDate' label='Fecha de nacimiento' placeholder='DIA/MES/AÑO' type='date' className='text-black' />
+          </div>
+         {/**
+          * 
+          * <Button
             onClick={() => {
               setDesplegue(!desplegue)
             }}
@@ -187,6 +196,7 @@ export default function Register({ isRegister: register = true }) {
               </section>
             )}
           />
+          */} 
           <Button type='submit' className='w-full rounded-none bg-pink-600 py-7'>
             Ingresar
           </Button>

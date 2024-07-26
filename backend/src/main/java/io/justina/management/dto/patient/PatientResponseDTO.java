@@ -3,6 +3,7 @@ package io.justina.management.dto.patient;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 /**
  * Clase DTO (Data Transfer Object) que representa la respuesta de información de un paciente.
@@ -10,6 +11,10 @@ import java.time.LocalDate;
 @Data
 public class PatientResponseDTO {
 
+    /**
+     * Identificador único del paciente.
+     */
+    private Long idPatient;
     /**
      * Nombre del paciente.
      */

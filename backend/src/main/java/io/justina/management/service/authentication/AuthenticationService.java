@@ -61,7 +61,7 @@ public class AuthenticationService implements UserDetailsService, IAuthenticatio
         return userDetails;
     }
     /**
-     * Autentica a un usuario con las credenciales proporcionadas y genera un token JWT.
+     * Autentíca a un usuario con las credenciales proporcionadas y genera un token JWT.
      *
      * @param userAuthenticateDataDTO Datos de autenticación del usuario (correo electrónico y contraseña).
      * @return DTO que contiene el token JWT generado.

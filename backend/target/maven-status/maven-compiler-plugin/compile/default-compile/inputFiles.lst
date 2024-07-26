@@ -12,10 +12,12 @@ C:\Users\Nico\IdeaProjects\h1-10-java-react\backend\src\main\java\io\justina\man
 C:\Users\Nico\IdeaProjects\h1-10-java-react\backend\src\main\java\io\justina\management\dto\jwttoken\DataJWTTokenDTO.java
 C:\Users\Nico\IdeaProjects\h1-10-java-react\backend\src\main\java\io\justina\management\dto\medicalstaff\MedicalStaffRegisterDTO.java
 C:\Users\Nico\IdeaProjects\h1-10-java-react\backend\src\main\java\io\justina\management\dto\medicalstaff\MedicalStaffResponseDTO.java
+C:\Users\Nico\IdeaProjects\h1-10-java-react\backend\src\main\java\io\justina\management\dto\patient\PatientRequestDTO.java
 C:\Users\Nico\IdeaProjects\h1-10-java-react\backend\src\main\java\io\justina\management\dto\patient\PatientResponseDTO.java
 C:\Users\Nico\IdeaProjects\h1-10-java-react\backend\src\main\java\io\justina\management\dto\user\UserAuthenticateDataDTO.java
 C:\Users\Nico\IdeaProjects\h1-10-java-react\backend\src\main\java\io\justina\management\dto\user\UserRegisterDataDTO.java
 C:\Users\Nico\IdeaProjects\h1-10-java-react\backend\src\main\java\io\justina\management\dto\user\UserResponseDataDTO.java
+C:\Users\Nico\IdeaProjects\h1-10-java-react\backend\src\main\java\io\justina\management\enums\RoleEnum.java
 C:\Users\Nico\IdeaProjects\h1-10-java-react\backend\src\main\java\io\justina\management\enums\Specialty.java
 C:\Users\Nico\IdeaProjects\h1-10-java-react\backend\src\main\java\io\justina\management\exception\BadRequestException.java
 C:\Users\Nico\IdeaProjects\h1-10-java-react\backend\src\main\java\io\justina\management\exception\ResourceNotFoundException.java

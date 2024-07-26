@@ -13,6 +13,7 @@ io\justina\management\exception\ResourceNotFoundException.class
 io\justina\management\dto\user\UserResponseDataDTO.class
 io\justina\management\dto\user\UserRegisterDataDTO.class
 io\justina\management\dto\error\ErrorDTO.class
+io\justina\management\enums\RoleEnum.class
 io\justina\management\dto\medicalstaff\MedicalStaffRegisterDTO.class
 io\justina\management\repository\MedicalStaffRepository.class
 io\justina\management\controller\patient\PatientController.class
@@ -36,7 +37,6 @@ io\justina\management\dto\jwttoken\DataJWTTokenDTO.class
 io\justina\management\config\mapper\ModelMapperConfig.class
 io\justina\management\service\patient\PatientService.class
 io\justina\management\service\user\UserService$1.class
-io\justina\management\service\medicalstaff\MedicalStaffService$1.class
 io\justina\management\handler\GlobalExceptionHandler.class
 io\justina\management\dto\medicalstaff\MedicalStaffResponseDTO.class
 io\justina\management\model\Patient.class
@@ -45,5 +45,5 @@ io\justina\management\dto\user\UserAuthenticateDataDTO.class
 io\justina\management\exception\BadRequestException.class
 io\justina\management\service\Appointment\AppointmentServiceImpl.class
 io\justina\management\dto\patient\PatientResponseDTO.class
-io\justina\management\service\medicalstaff\MedicalStaffService$2.class
+io\justina\management\dto\patient\PatientRequestDTO.class
 io\justina\management\service\user\IUserService.class

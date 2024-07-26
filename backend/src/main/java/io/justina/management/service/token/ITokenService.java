@@ -1,3 +1,4 @@
+
 package io.justina.management.service.token;
 
 import io.justina.management.model.User;

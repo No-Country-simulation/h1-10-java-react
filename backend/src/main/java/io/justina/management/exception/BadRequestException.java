@@ -6,6 +6,7 @@ package io.justina.management.exception;
  * Esta excepción se utiliza para indicar que la solicitud realizada por el cliente no es válida o está mal formada.
  */
 public class BadRequestException extends RuntimeException {
+
     /**
      * Constructor que acepta un mensaje de error.
      *

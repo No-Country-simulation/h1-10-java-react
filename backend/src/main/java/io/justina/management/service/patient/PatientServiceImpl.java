@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Implementación del servicio para gestionar pacientes en el sistema.
@@ -65,7 +64,7 @@ public class PatientServiceImpl implements PatientService {
      * @throws IllegalArgumentException Si no se encuentra un paciente con el ID especificado.
      */
     @Override
-    public Patient getPatientById(UUID patientId) {
+    public Patient getPatientById(Long patientId) {
         return patientRepository.findById(patientId)
                 .orElseThrow(() -> new IllegalArgumentException("Patient not found"));
     }
@@ -115,7 +114,7 @@ public class PatientServiceImpl implements PatientService {
      * @throws EntityNotFoundException Si no se encuentra un paciente con el ID especificado.
      */
     @Override
-    public void deactivatePatient(UUID patientId) {
+    public void deactivatePatient(Long patientId) {
         Patient patient = patientRepository.findById(patientId)
                 .orElseThrow(() -> new EntityNotFoundException("Patient not found with id: " + patientId));
         patient.setActive(false);

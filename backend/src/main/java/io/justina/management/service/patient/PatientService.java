@@ -6,8 +6,6 @@ import io.justina.management.dto.patient.PatientResponseDTO;
 import io.justina.management.model.Patient;
 
 import java.util.List;
-import java.util.UUID;
-
 /**
  * Interfaz que define los métodos para gestionar pacientes en el sistema.
  */
@@ -26,7 +24,7 @@ public interface PatientService {
      * @param patientId ID del paciente que se desea obtener.
      * @return Objeto Patient correspondiente al paciente encontrado.
      */
-    Patient getPatientById(UUID patientId);
+    Patient getPatientById(Long patientId);
 
     /**
      * Crea un nuevo paciente en el sistema.
@@ -41,7 +39,6 @@ public interface PatientService {
      *
      * @param patientId ID del paciente que se desea desactivar.
      */
-    void deactivatePatient(UUID patientId);
+    void deactivatePatient(Long patientId);
 
 }
-

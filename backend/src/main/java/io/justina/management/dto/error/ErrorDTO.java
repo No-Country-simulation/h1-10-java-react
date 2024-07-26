@@ -1,6 +1,7 @@
 package io.justina.management.dto.error;
 
 import java.time.LocalDateTime;
+
 /**
  * Clase que representa un objeto DTO para los errores.
  *
@@ -24,3 +25,4 @@ public record ErrorDTO(
 
         String details) {
 }
+

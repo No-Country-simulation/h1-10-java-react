@@ -48,3 +48,4 @@ public class UserRegisterDataDTO {
     @NotNull(message = "El rol es obligatorio")
     private String roleEnum;
 }
+

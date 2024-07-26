@@ -1,3 +1,4 @@
+
 package io.justina.management.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,3 +88,4 @@ public class SecurityConfiguration {
     }
 
 }
+

@@ -20,6 +20,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.Collection;
+
 /**
  * Filtro de seguridad para validar y establecer la autenticación basada en tokens JWT.
  * Extiende OncePerRequestFilter para garantizar que se ejecute una vez por cada solicitud.
@@ -86,4 +87,5 @@ public class SecurityFilter extends OncePerRequestFilter {
     }
 
 }
+
 

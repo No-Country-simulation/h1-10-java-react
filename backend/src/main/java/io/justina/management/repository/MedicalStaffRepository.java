@@ -40,4 +40,3 @@ public interface MedicalStaffRepository extends JpaRepository<MedicalStaff, Long
 
 
 }
-

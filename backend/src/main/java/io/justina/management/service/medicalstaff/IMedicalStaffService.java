@@ -48,3 +48,4 @@ public interface IMedicalStaffService {
     List<MedicalStaffResponseDTO> getMedicalStaffByActive();
 }
 
+

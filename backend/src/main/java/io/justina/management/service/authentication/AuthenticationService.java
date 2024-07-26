@@ -71,7 +71,7 @@ public class AuthenticationService implements UserDetailsService, IAuthenticatio
         Authentication authenticationToken = new UsernamePasswordAuthenticationToken(userAuthenticateDataDTO.getEmail(), userAuthenticateDataDTO.getPassword());
         var entityAuth = authenticationManager.authenticate(authenticationToken).getPrincipal();
         var jwtToken = tokenService.generateToken((User) entityAuth);
-            return new DataJWTTokenDTO(jwtToken);
+        return new DataJWTTokenDTO(jwtToken);
     }
 
     /**

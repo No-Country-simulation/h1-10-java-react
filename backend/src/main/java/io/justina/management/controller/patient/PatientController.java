@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
+
 /**
  * Controlador REST que maneja las operaciones relacionadas con los pacientes.
  *
@@ -22,8 +22,12 @@ import java.util.UUID;
 @RequestMapping("v1/api/patient")
 public class PatientController {
 
+
+    private final PatientService patientService;
     @Autowired
-    PatientService patientService;
+    public PatientController(PatientService patientService) {
+        this.patientService = patientService;
+    }
 
     /**
      * Maneja la solicitud GET para obtener todos los pacientes.
@@ -43,7 +47,7 @@ public class PatientController {
      * @return ResponseEntity con el paciente encontrado y el estado HTTP correspondiente.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Patient> findById(@PathVariable UUID id) {
+    public ResponseEntity<Patient> findById(@PathVariable Long id) {
         return new ResponseEntity<>(patientService.getPatientById(id), HttpStatus.OK);
     }
     /**
@@ -66,7 +70,7 @@ public class PatientController {
      */
 
     @DeleteMapping("/{id}")
-    private ResponseEntity<Void> deletePatient(@PathVariable UUID id) {
+    private ResponseEntity<Void> deletePatient(@PathVariable Long id) {
         patientService.deactivatePatient(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -75,3 +79,4 @@ public class PatientController {
 
 
 }
+

@@ -32,3 +32,4 @@ public class UserResponseDataDTO {
      */
     private String role;
 }
+

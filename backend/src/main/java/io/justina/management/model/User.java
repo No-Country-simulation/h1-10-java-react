@@ -1,3 +1,4 @@
+
 package io.justina.management.model;
 
 import io.justina.management.enums.RoleEnum;

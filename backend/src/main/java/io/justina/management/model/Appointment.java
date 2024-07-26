@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+
 /**
  * Clase que representa un turno médico.
  * Esta entidad está mapeada a la tabla "turnos" en la base de datos.
@@ -81,3 +82,4 @@ public class Appointment {
     private boolean completed;
     * */
 }
+

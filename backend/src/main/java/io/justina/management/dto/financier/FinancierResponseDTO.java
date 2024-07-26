@@ -2,7 +2,9 @@ package io.justina.management.dto.financier;
 
 
 import lombok.Data;
+
 import java.util.UUID;
+
 /**
  * Clase DTO (Data Transfer Object) que representa la respuesta de información de un financiero.
  */

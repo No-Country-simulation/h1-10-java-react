@@ -13,6 +13,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 /**
  * Controlador REST que maneja las operaciones relacionadas con el personal médico.
  *

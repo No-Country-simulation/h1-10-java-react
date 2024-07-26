@@ -1,6 +1,5 @@
 package io.justina.management.dto.medicalstaff;
 
-
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -8,6 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 /**
  * Clase DTO (Data Transfer Object) que representa la información de registro de un personal médico.
  */

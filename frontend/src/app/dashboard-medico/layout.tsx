@@ -13,8 +13,8 @@ import 'react-modern-drawer/dist/index.css'
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const rutasMedico = [
     { texto: 'Turnos', href: '/dashboard-medico', icon: <MedicTime /> },
+    { texto: 'Pacientes', href: '/dashboard-medico/pacientes', icon: <UsersGroupIcon /> },
     { texto: 'Mi perfil', href: '/dashboard-medico/mi-perfil', icon: <UserIcon /> },
-    { texto: 'Pacientes', href: '/dashboard-medico/pacientes', icon: <UsersGroupIcon /> }
   ]
 
   const [isOpen, setIsOpen] = useState(false)

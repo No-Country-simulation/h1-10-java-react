@@ -28,45 +28,46 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Input } from '@/components/ui/input'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import Link from 'next/link'
 
 const data: Payment[] = [
   {
     id: 'm5gr84i9',
-    amount: 316,
-    status: 'success',
-    email: 'ken99@yahoo.com'
+    nombreYapellido: 'Pepito Pepe',
+    edad: '44',
+    ultimaVisita: '15/01/2024'
   },
   {
     id: '3u1reuv4',
-    amount: 242,
-    status: 'success',
-    email: 'Abe45@gmail.com'
+    nombreYapellido: 'Laura Juarez',
+    edad: '24',
+    ultimaVisita: '20/05/2023'
   },
   {
     id: 'derv1ws0',
-    amount: 837,
-    status: 'processing',
-    email: 'Monserrat44@gmail.com'
+    nombreYapellido: 'Juan Martinez',
+    edad: '26',
+    ultimaVisita: '25/05/2024'
   },
   {
     id: '5kma53ae',
-    amount: 874,
-    status: 'success',
-    email: 'Silas22@gmail.com'
+    nombreYapellido: 'Susana Tinelli',
+    edad: '36',
+    ultimaVisita: '14/06/2024'
   },
   {
     id: 'bhqecj4p',
-    amount: 721,
-    status: 'failed',
-    email: 'carmella@hotmail.com'
+    nombreYapellido: 'Teodoro Jerez',
+    edad: '65',
+    ultimaVisita: '03/07/2024'
   }
 ]
 
 type Payment = {
   id: string
-  amount: number
-  status: 'pending' | 'processing' | 'success' | 'failed'
-  email: string
+  nombreYapellido: string
+  edad: string
+  ultimaVisita: string
 }
 
 const columns: ColumnDef<Payment>[] = [
@@ -90,59 +91,51 @@ const columns: ColumnDef<Payment>[] = [
     enableHiding: false
   },
   {
-    accessorKey: 'status',
-    header: 'Status',
-    cell: ({ row }) => <div className='capitalize'>{row.getValue('status')}</div>
+    accessorKey: 'nombreYapellido',
+    header: 'Nombre y apellido',
+    cell: ({ row }) => <div className='capitalize'>{row.getValue('nombreYapellido')}</div>
   },
   {
-    accessorKey: 'email',
+    accessorKey: 'edad',
     header: ({ column }) => {
       return (
         <Button variant='ghost' onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-          Email
+          Edad
           <CaretSortIcon className='ml-2 h-4 w-4' />
         </Button>
       )
     },
-    cell: ({ row }) => <div className='lowercase'>{row.getValue('email')}</div>
+    cell: ({ row }) => <div className='lowercase'>{row.getValue('edad')}</div>
   },
   {
-    accessorKey: 'amount',
-    header: () => <div className='text-right'>Amount</div>,
+    accessorKey: 'ultimaVisita',
+    header: () => <div className='text-right'>Última visita</div>,
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue('amount'))
-
-      // Format the amount as a dollar amount
-      const formatted = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD'
-      }).format(amount)
-
-      return <div className='text-right font-medium'>{formatted}</div>
+      return <div className='text-right font-medium'>{row.getValue('ultimaVisita')}</div>
     }
   },
   {
     id: 'actions',
     enableHiding: false,
     cell: ({ row }) => {
-      const payment = row.original
-
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant='ghost' className='h-8 w-8 p-0'>
-              <span className='sr-only'>Open menu</span>
+              <span className='sr-only'>Ver menu</span>
               <DotsHorizontalIcon className='h-4 w-4' />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align='end'>
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(payment.id)}>
+            {/* <DropdownMenuLabel>Actions</DropdownMenuLabel> */}
+            {/* <DropdownMenuItem onClick={() => navigator.clipboard.writeText(payment.id)}>
               Copy payment ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem>View customer</DropdownMenuItem> */}
+            <DropdownMenuItem>
+              <Link href={`/dashboard-medico/pacientes/${row.original.id}`}>Ver paciente</Link>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )
@@ -181,9 +174,9 @@ const MisPacientes = () => {
 
       <div className='flex items-center py-4'>
         <Input
-          placeholder='Filter emails...'
-          value={(table.getColumn('email')?.getFilterValue() as string) ?? ''}
-          onChange={(event) => table.getColumn('email')?.setFilterValue(event.target.value)}
+          placeholder='Buscar por nombre...'
+          value={(table.getColumn('nombreYapellido')?.getFilterValue() as string) ?? ''}
+          onChange={(event) => table.getColumn('nombreYapellido')?.setFilterValue(event.target.value)}
           className='max-w-sm'
         />
         <DropdownMenu>

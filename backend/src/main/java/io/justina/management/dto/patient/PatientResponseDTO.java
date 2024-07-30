@@ -14,7 +14,7 @@ public class PatientResponseDTO {
     /**
      * Identificador único del paciente.
      */
-    private Long idPatient;
+    private Long id;
     /**
      * Nombre del paciente.
      */

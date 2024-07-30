@@ -1,8 +1,10 @@
 package io.justina.management.config.security;
 
 import io.justina.management.model.MedicalStaff;
+import io.justina.management.model.Patient;
 import io.justina.management.model.User;
 import io.justina.management.repository.MedicalStaffRepository;
+import io.justina.management.repository.PatientRepository;
 import io.justina.management.repository.UserRepository;
 import io.justina.management.service.token.TokenService;
 import jakarta.servlet.FilterChain;
@@ -31,6 +33,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     private final TokenService tokenService;
     private final UserRepository userRepository;
     private final MedicalStaffRepository medicalStaffRepository;
+    private final PatientRepository patientRepository;
 
     /**
      * Constructor que inicializa el filtro de seguridad con los servicios necesarios.
@@ -40,10 +43,11 @@ public class SecurityFilter extends OncePerRequestFilter {
      * @param medicalStaffRepository Repositorio de personal médico para la autenticación de roles de doctor
      */
     @Autowired
-    public SecurityFilter(TokenService tokenService, UserRepository userRepository, MedicalStaffRepository medicalStaffRepository) {
+    public SecurityFilter(TokenService tokenService, UserRepository userRepository, MedicalStaffRepository medicalStaffRepository, PatientRepository patientRepository) {
         this.tokenService = tokenService;
         this.userRepository = userRepository;
         this.medicalStaffRepository = medicalStaffRepository;
+        this.patientRepository = patientRepository;
     }
     /**
      * Implementación del filtro de seguridad para validar y establecer la autenticación basada en tokens JWT.
@@ -52,7 +56,7 @@ public class SecurityFilter extends OncePerRequestFilter {
      * @param response    Objeto HttpServletResponse que representa la respuesta HTTP saliente
      * @param filterChain Cadena de filtros para continuar el procesamiento de la solicitud
      * @throws ServletException Si hay un error de servlet
-     * @throws IOException      Si hay un error de E/S
+     * @throws IOException      Sí hay un error de E/S
      */
     public void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");
@@ -76,6 +80,15 @@ public class SecurityFilter extends OncePerRequestFilter {
                     if (medicalStaff != null) {
                         Collection<? extends GrantedAuthority> authorities = medicalStaff.getUser().getAuthorities();
                         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(medicalStaff, null, authorities);
+                        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                        SecurityContextHolder.getContext().setAuthentication(authentication);
+                    }
+                }else if (tokenService.hasRol(token, "ROLE_PATIENT")){
+                    Patient patient = patientRepository.findByUser_Email(subject);
+                    System.out.println("This is patient: " + patient);
+                    if (patient != null) {
+                        Collection<? extends GrantedAuthority> authorities = patient.getUser().getAuthorities();
+                        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(patient, null, authorities);
                         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                         SecurityContextHolder.getContext().setAuthentication(authentication);
                     }

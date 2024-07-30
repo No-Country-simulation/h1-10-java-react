@@ -4,6 +4,7 @@ import io.justina.management.dto.patient.PatientRequestDTO;
 import io.justina.management.dto.patient.PatientResponseDTO;
 import io.justina.management.model.Patient;
 import io.justina.management.service.patient.PatientService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,6 @@ import java.util.List;
 @RequestMapping("v1/api/patient")
 public class PatientController {
 
-
     private final PatientService patientService;
     @Autowired
     public PatientController(PatientService patientService) {
@@ -34,6 +34,7 @@ public class PatientController {
      *
      * @return ResponseEntity con la lista de pacientes y el estado HTTP correspondiente.
      */
+    @Operation(summary = "Get all patients")
     @GetMapping()
     public ResponseEntity<List<PatientResponseDTO>> findAll() {
         List<PatientResponseDTO> patientList = patientService.getAllPatients();
@@ -43,9 +44,10 @@ public class PatientController {
     /**
      * Maneja la solicitud GET para obtener un paciente por su ID.
      *
-     * @param id ID del paciente que se desea obtener.
+     * @param id id del paciente que se desea obtener.
      * @return ResponseEntity con el paciente encontrado y el estado HTTP correspondiente.
      */
+    @Operation(summary = "Get a patient by ID")
     @GetMapping("/{id}")
     public ResponseEntity<Patient> findById(@PathVariable Long id) {
         return new ResponseEntity<>(patientService.getPatientById(id), HttpStatus.OK);
@@ -56,7 +58,7 @@ public class PatientController {
      * @param patient Objeto del paciente que se desea crear.
      * @return ResponseEntity con el paciente creado y el estado HTTP correspondiente.
      */
-
+    @Operation(summary = "Create a new patient")
     @PostMapping
     public ResponseEntity<PatientResponseDTO> createPatient(@RequestBody @Valid PatientRequestDTO patient) {
         PatientResponseDTO createdPatient = patientService.createPatient(patient);
@@ -65,10 +67,10 @@ public class PatientController {
     /**
      * Maneja la solicitud DELETE para desactivar un paciente por su ID.
      *
-     * @param id ID del paciente que se desea desactivar.
+     * @param id id del paciente que se desea desactivar.
      * @return ResponseEntity con el estado HTTP correspondiente.
      */
-
+    @Operation(summary = "Delete a patient by ID")
     @DeleteMapping("/{id}")
     private ResponseEntity<Void> deletePatient(@PathVariable Long id) {
         patientService.deactivatePatient(id);
@@ -79,4 +81,3 @@ public class PatientController {
 
 
 }
-

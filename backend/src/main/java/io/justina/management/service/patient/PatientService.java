@@ -21,7 +21,7 @@ public interface PatientService {
     /**
      * Obtiene un paciente por su ID.
      *
-     * @param patientId ID del paciente que se desea obtener.
+     * @param patientId id del paciente que se desea obtener.
      * @return Objeto Patient correspondiente al paciente encontrado.
      */
     Patient getPatientById(Long patientId);
@@ -37,7 +37,7 @@ public interface PatientService {
     /**
      * Desactiva a un paciente por su ID.
      *
-     * @param patientId ID del paciente que se desea desactivar.
+     * @param patientId id del paciente que se desea desactivar.
      */
     void deactivatePatient(Long patientId);
 

@@ -130,4 +130,4 @@ Para esto se utilizaron la herramientas:
 
 ## Despliegue del backend
 - **Estructura base**
-  ![image](https://github.com/No-Country-simulation/h1-10-java-react/edit/main/README.md#:~:text=estructura_backend.-,jpg,-frontend)
+  ![image](docs/images/estructura_backend.jpg)

@@ -13,6 +13,7 @@ Contenido
  7. [Stack Tecnológico](#stack-tecnológico)
  8. [Producto mínimo viable](#producto-mínimo-viable) 
  9. [Incepción y gamificación](#incepción-y-gamificación)
+ 10. [Despliegue del backend](#despliegue-del-backend) 
 
 ## Vista general del proyecto
 La donación de órganos humanos es un calvario para las personas que desean ablación o implante de órganos humanos. El caso que conmovió a toda una nación es "**[Justina](https://ipnoticias.ar/actualidad/18772-la-otra-parte-de-la-historia-de-justina-el-padre-de-la-chica-que-con-su-corazon)**". Si la niña Justina, en paz descance,  quien perdió la vida por no encontrar una donador. De ahí que este proyecto sea una pieza que promueva de manera eficaz la donación de órganos. Tal como la misma niña decia "ayudemos papá".  Iniciativas como "**multiplicate x 7**" promovidas por el papá de la niña; don **Ezequiel Lo Cane** han permeado hasta esta instancia para colaborar mediante *hackaton* para prototipar una aplicación web con la promoción, gestión y control de los procesos de ablación e implante de órganos humanos. 
@@ -126,3 +127,7 @@ Para esto se utilizaron la herramientas:
 |--|--|
 | Miro | https://miro.com/app/dashboard/ |
 | MindMinster | https://www.mindmeister.com/app/folders/2715836 |
+
+## Despliegue del backend
+- **Estructura base**
+  ![image](https://github.com/No-Country-simulation/h1-10-java-react/edit/main/README.md#:~:text=estructura_backend.-,jpg,-frontend)

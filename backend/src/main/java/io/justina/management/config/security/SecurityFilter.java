@@ -43,7 +43,8 @@ public class SecurityFilter extends OncePerRequestFilter {
      * @param medicalStaffRepository Repositorio de personal médico para la autenticación de roles de doctor
      */
     @Autowired
-    public SecurityFilter(TokenService tokenService, UserRepository userRepository, MedicalStaffRepository medicalStaffRepository, PatientRepository patientRepository) {
+    public SecurityFilter(TokenService tokenService, UserRepository userRepository, MedicalStaffRepository medicalStaffRepository,
+                          PatientRepository patientRepository) {
         this.tokenService = tokenService;
         this.userRepository = userRepository;
         this.medicalStaffRepository = medicalStaffRepository;
@@ -60,7 +61,6 @@ public class SecurityFilter extends OncePerRequestFilter {
      */
     public void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");
-        System.out.println("This is filter begin");
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.replace("Bearer ", "");
             String subject = tokenService.getSubject(token);
@@ -83,15 +83,13 @@ public class SecurityFilter extends OncePerRequestFilter {
                         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                         SecurityContextHolder.getContext().setAuthentication(authentication);
                     }
-                }else if (tokenService.hasRol(token, "ROLE_PATIENT")){
+                } else if (tokenService.hasRol(token, "ROLE_PATIENT")){
                     Patient patient = patientRepository.findByUser_Email(subject);
-                    System.out.println("This is patient: " + patient);
-                    if (patient != null) {
-                        Collection<? extends GrantedAuthority> authorities = patient.getUser().getAuthorities();
-                        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(patient, null, authorities);
-                        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                        SecurityContextHolder.getContext().setAuthentication(authentication);
-                    }
+                    System.out.println("This is patient: " + patient.getUser().getEmail());
+                    Collection<? extends GrantedAuthority> authorities = patient.getUser().getAuthorities();
+                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(patient, null, authorities);
+                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
 
             }
@@ -100,5 +98,3 @@ public class SecurityFilter extends OncePerRequestFilter {
     }
 
 }
-
-

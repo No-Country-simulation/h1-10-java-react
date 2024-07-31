@@ -167,7 +167,7 @@ const MisPacientes = () => {
       rowSelection
     }
   })
-
+console.log(data)
   return (
     <div className='w-full'>
       <h3 className='mb-2 text-3xl font-bold'>Pacientes</h3>

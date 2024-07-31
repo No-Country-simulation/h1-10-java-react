@@ -8,12 +8,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
-import { Patient } from '@/tipos/database'
+import { Medical } from '@/tipos/database'
 import { ColumnDef } from '@tanstack/react-table'
 import { CheckIcon, MoreHorizontalIcon, XIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { toast } from '../ui/use-toast'
 
-const columns: ColumnDef<Patient>[] = [
+const columns: ColumnDef<Medical>[] = [
   {
     accessorKey: 'firstName',
     header: 'Nombre'
@@ -27,24 +28,17 @@ const columns: ColumnDef<Patient>[] = [
     header: 'Email'
   },
   {
-    accessorKey: 'birthDate',
-    header: 'Fecha de nacimiento'
+    accessorKey: 'phone',
+    header: 'Teléfono'
   },
   {
-    accessorKey: 'identificationNumber',
-    header: 'Número de identificación'
+    accessorKey: 'medicalRegistrationNumber',
+    header: 'Número de identificación',
+    cell: (cell) => <span className='flex items-center justify-center'>{cell.getValue() as number}</span>
   },
   {
-    accessorKey: 'sex',
-    header: 'Sexo'
-  },
-  {
-    accessorKey: 'bloodType',
-    header: 'Tipo de sangre'
-  },
-  {
-    accessorKey: 'bloodFactor',
-    header: 'Factor de sangre'
+    accessorKey: 'specialities',
+    header: 'Especialidades'
   },
   {
     accessorKey: 'active',
@@ -58,7 +52,26 @@ const columns: ColumnDef<Patient>[] = [
   {
     accessorKey: 'actions',
     header: 'Acciones',
-    cell: () => {
+    cell: ({ row }) => {
+      const medical = row.original
+
+      const handleOnDisable = async () => {
+        try {
+          await fetch(`https://backend-justina-deploy.onrender.com/v1/api/medical-staff/delete/${medical.id}`, {
+            method: 'DELETE',
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token') ?? ''}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({})
+          })
+
+          toast({ title: '¡Se ha desactivado el médico!' })
+        } catch (error) {
+          toast({ title: 'Ha ocurrido un error al eliminar el médico' })
+        }
+      }
+
       return (
         <DropdownMenu>
           <div className='flex items-center justify-center'>
@@ -71,7 +84,7 @@ const columns: ColumnDef<Patient>[] = [
           <DropdownMenuContent align='end'>
             <DropdownMenuItem>Editar</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Desactivar</DropdownMenuItem>
+            <DropdownMenuItem onClick={handleOnDisable}>Desactivar</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )
@@ -79,27 +92,27 @@ const columns: ColumnDef<Patient>[] = [
   }
 ]
 
-function PatientsTable() {
-  const [patients, setPatients] = useState<Patient[]>([])
+function MedicalsTable() {
+  const [medicals, setMedicals] = useState<Medical[]>([])
 
   useEffect(() => {
-    const getPatients = async () => {
-      const request = await fetch('https://backend-justina-deploy.onrender.com/v1/api/patient', {
+    const getMedicals = async () => {
+      const request = await fetch('https://backend-justina-deploy.onrender.com/v1/api/medical-staff/getAll', {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token') ?? ''}`
         }
       })
-      const patients = await request.json()
-      return patients
+      const medicals = await request.json()
+      return medicals
     }
 
-    getPatients()
-      .then((patients) => setPatients(patients))
+    getMedicals()
+      .then((medicals) => setMedicals(medicals))
       .catch((error) => console.log(error))
   }, [])
 
-  return <DataTable columns={columns} data={patients} />
+  return <DataTable columns={columns} data={medicals} />
 }
 
-export { PatientsTable }
+export { MedicalsTable }

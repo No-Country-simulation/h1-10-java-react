@@ -3,15 +3,13 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import React, { useState } from 'react'
-import { z } from 'zod'
+import { object, z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Toast, ToastProvider } from '../ui/toast'
-import { toast } from '../ui/use-toast'
-
+import { jwtDecode } from 'jwt-decode'
 const formSchema = z.object({
   email: z.string().min(2, {
     message: 'Username must be at least 2 characters'
@@ -29,8 +27,21 @@ export default function Login() {
       password: ''
     }
   })
-const [ErrorMessage, setErrorMessage] = useState('')
+
+  const Enviar = (role = '') => {
+    if (role === 'ROLE_PATIENT') {
+      window.location.href = '/dashboard-paciente'
+      return
+    } else if (role === 'ROLE_ADMIN') {
+      window.location.href = '/dashboard'
+      return
+    }
+    window.location.href = '/dashboard-medico'
+  }
+  const [ErrorMessage, setErrorMessage] = useState('')
+  const [loading, setLoading] = useState(false)
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setLoading(true)
     try {
       const response = await fetch('https://backend-justina-deploy.onrender.com/v1/api/login',{
         method: 'POST',
@@ -39,7 +50,7 @@ const [ErrorMessage, setErrorMessage] = useState('')
         },
         body: JSON.stringify(values)
       })
-
+      setLoading(false)
       if (!response.ok) {
         const Message = 'El error es un error de autenticación, revise el correo y la contraseña son correctos'
         setErrorMessage(Message)
@@ -48,17 +59,31 @@ const [ErrorMessage, setErrorMessage] = useState('')
       const token = await response.json()
       localStorage.setItem('token', token.jwtToken)
       console.log(token)
+      const decoded = jwtDecode(token.jwtToken)
+      console.log(decoded)
+      Enviar(decoded.role)
     } catch (error) {
+      setLoading(false)
       const Message = 'A ocurrido un error, revisa que tu correo y contraseña sean correctas, o puede que tu cuenta no exista'
-        setErrorMessage( Message )
+      setErrorMessage(Message)
       console.error('Hubo un error de petición  ', error)
     }
     console.log(values)
   }
   console.log(formSchema)
   return (
-    <section className='flex w-full flex-col p-5 text-black'>
-      {/**Logo que puede cambiar */}
+    <section className='flex w-full flex-col  p-5 text-black relative'>
+      {loading &&
+        <div className='absolute inset-0 flex items-center justify-center'>
+          <Image
+            src='/loading.svg'
+            alt='Icon de cargando'
+            width={100}
+            height={100}
+            className='animate-spin mr-3    opacity-45  '
+          />
+        </div>}
+      {/** Logo que puede cambiar */}
       <Image
         src='/JustinaIO.svg'
         alt='JustinaIOLogo'
@@ -107,7 +132,7 @@ const [ErrorMessage, setErrorMessage] = useState('')
               </FormItem>
             )}
           />
-          <Link href={'aqui entrara el link de page olvidaste contraseña'} className='text-xs'>
+          <Link href='aqui entrara el link de page olvidaste contraseña' className='text-xs'>
             Olvidaste tu contraseña?
           </Link>{' '}
           <br />
@@ -117,11 +142,11 @@ const [ErrorMessage, setErrorMessage] = useState('')
         </form>
       </Form>
       {ErrorMessage && 
-      <section className='max-w-96 text-white bg-black px-4 py-2 absolute bottom-5 right-5 rounded-sm space-y-3' >
-        <div className='relative'><button onClick={() => setErrorMessage('')} className='absolute font-bold right-0 hover:scale-x-125 transition-transform'>X</button></div> 
-        <h6 className='font-bold'>A ocurrido un error.</h6>
-        <p className='text-sm'>{ErrorMessage}</p>
-      </section>}
+        <section className='max-w-96 text-white bg-black px-4 py-2 absolute bottom-0 right-[20%] left-[20%] rounded-sm space-y-3' >
+          <div className='relative'><button onClick={() => setErrorMessage('')} className='absolute font-bold right-0 hover:scale-x-125 transition-transform'>X</button></div> 
+          <h6 className='font-bold'>A ocurrido un error.</h6>
+          <p className='text-sm'>{ErrorMessage}</p>
+        </section>}
     </section>
   )
 }

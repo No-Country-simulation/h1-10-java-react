@@ -1,4 +1,5 @@
 import { AdminDashboardAside, DashboardHeader } from '@/components'
+import { Toaster } from '@/components/ui/toaster'
 
 interface DashboardLayoutProps {
   children: React.ReactNode
@@ -12,6 +13,7 @@ function DashboardLayout({ children }: DashboardLayoutProps) {
         <DashboardHeader />
         {children}
       </div>
+      <Toaster />
     </div>
   )
 }

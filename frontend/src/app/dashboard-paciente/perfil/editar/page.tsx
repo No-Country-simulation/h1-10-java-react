@@ -1,5 +1,6 @@
 'use client'
 
+
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import React, { useEffect, useState } from 'react'
@@ -8,18 +9,16 @@ import { z } from 'zod'
 import { toast } from '@/components/ui/use-toast'
 import { Textarea } from '@/components/ui/textarea'
 import { FormValues, Formshema } from '@/app/lib/perfil_actions'
-import TarjetaTurno from '@/components/ui/Perfil/TarjetaTurno'
+
 import InputText from '@/components/ui/Perfil/InputText'
 import SelectPerfil from '@/components/ui/Perfil/SelectPerfil'
 import TiposSangreRadio from '@/components/ui/Perfil/TiposSangreRadio'
 import { jwtDecode } from 'jwt-decode'
 
 export default function Perfilpage() {
-  const [form] = FormValues()
+  let [form] =  FormValues()
   const [formSchema] = Formshema()
   // eslint-disable-next-line react-hooks/rules-of-hooks
-const [token, setToken] = useState('')
-const [datosPerfil, setdatosPerfil] = useState({})
   function onSubmit(values: z.infer<typeof formSchema>) {
     toast({
       title: 'You submitted the following values',
@@ -32,26 +31,14 @@ const [datosPerfil, setdatosPerfil] = useState({})
     console.log(values)
   }
 
-  
-
   const ObrasSocial = ['Ayudar', 'Servir', 'Saber']
   const SelectsDocumentos = ['Carnet de identidad', 'CI', 'Otro documentos']
   const SelectBiologia = ['Hombre', 'Mujer', 'Intersexualidad']
   const SelectPatologia = ['Diabetes', 'Celiaquia', 'Ipertención', 'Calculo renal']
-  useEffect(() => {
-    const tokenStore = window.localStorage.getItem('token')
-    setToken(tokenStore ?? '')
-    if (token) {
-      const datosPerfil = jwtDecode(token)  
-    setdatosPerfil(datosPerfil)
-    }
-      
-  }, [])
+  
   return (
     <main>
-      <TarjetaTurno />
-      <hr />
-
+     
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-3'>
           <section className='my-7 grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-6'>

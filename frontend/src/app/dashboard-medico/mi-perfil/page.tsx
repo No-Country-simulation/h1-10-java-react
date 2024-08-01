@@ -1,20 +1,24 @@
+'use client'
 import SimpleDisplayData from '@/components/SimpleDisplayData.tsx/SimpleDisplayData'
 import { Separator } from '@/components/ui/separator'
+import { useStaffContext } from '@/context/medicoProvider'
 import React from 'react'
 
 const MiPerfilMedico = () => {
+  const { state } = useStaffContext()
+
   return (
     <div>
       <h3 className='mb-2 text-3xl font-bold'>Mi Perfil</h3>
       <div className='flex flex-col gap-4'>
         <div className='flex gap-y-8'>
-          <SimpleDisplayData data='cintia Jimena' titulo='Nombre/s' />
-          <SimpleDisplayData data='martinez' titulo='Apellido/s' />
+          <SimpleDisplayData data={state.firstName} titulo='Nombre/s' />
+          <SimpleDisplayData data={state.lastName} titulo='Apellido/s' />
         </div>
 
         <div className='flex gap-y-8'>
-          <SimpleDisplayData data='22.444.555' titulo='N° Nacional de identiadad' />
-          <SimpleDisplayData data='16/10/1993' titulo='Fecha nacimiento' />
+          <SimpleDisplayData data={state.phone || '--'} titulo='Teléfono' />
+          <SimpleDisplayData data={state.email} titulo='Email' />
         </div>
 
         <div className='flex gap-y-8'>
@@ -23,12 +27,11 @@ const MiPerfilMedico = () => {
 
         <Separator />
         <div className='flex gap-y-8'>
-          <SimpleDisplayData data='34355' titulo='N° de Matricula' />
+          <SimpleDisplayData data={state?.medicalRegistrationNumber?.toString() || "--"} titulo='N° de Matricula' />
 
           <div className='flex-1'>
             <h3 className='text-lg font-semibold'>Especialidades</h3>
-            <p className='text-lg capitalize'>Ginecologo</p>
-            <p className='text-lg capitalize'>Oncologo</p>
+            <p className='text-lg capitalize'>{state.specialities}</p>
           </div>
         </div>
 

@@ -1,10 +1,12 @@
 'use client'
 import { Separator } from '@/components/ui/separator'
 import { TabsContent } from '@/components/ui/tabs'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import TurnoLinaeTiempoItem from './TurnoLinaeTiempoItem'
 import FarmularioContultaActiva from './FarmularioContultaActiva'
 import { turnosProps } from '@/tipos/turnosProps'
+import { useQuery } from '@tanstack/react-query'
+import { jwtDecode, JwtPayload } from 'jwt-decode'
 
 const consultasHoy: turnosProps[] = [
   {
@@ -37,8 +39,31 @@ const consultasHoy: turnosProps[] = [
   }
 ]
 
+interface MyJwtPayload extends JwtPayload {
+  id: string
+}
+
 const AgendaHoy = () => {
   const [pacienteActivo, setPacienteActivo] = useState('')
+  const token = localStorage.getItem('token') || null
+
+  const decoded = jwtDecode<MyJwtPayload>(token ? token : '')
+  const { isPending, error, data, refetch } = useQuery({
+    queryKey: ['appointments'],
+    queryFn: () =>
+      fetch(`https://backend-justina-deploy.onrender.com/v1/api/appointment/getByMedicalStaff/${decoded?.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }).then((res) => res.json()),
+    enabled: !!decoded?.id
+  })
+
+  useEffect(() => {
+    if (token) {
+      refetch() // Ejecutar la consulta manualmente cuando el token esté disponible
+    }
+  }, [token, refetch])
 
   return (
     <TabsContent value='agendaHoy' className='w-full'>

@@ -43,9 +43,9 @@ const reducer = (state: UserMedico, action: any) => {
 
 const useStaffContext = () => {
   const context = useContext(StaffProvider)
-  if (!context) {
-    throw new Error('useStaffContext must be used within a MedicoProvider')
-  }
+  // if (!context) {
+  //   throw new Error('useStaffContext must be used within a MedicoProvider')
+  // }
   return context
 }
 

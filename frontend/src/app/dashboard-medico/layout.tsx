@@ -25,7 +25,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }
   return (
     <>
-      <MedicoProvider>
+      {/* <MedicoProvider> */}
         <TanStackQueryProvider>
           <section className='mx-auto flex h-full w-full px-1 py-2 lg:container lg:gap-5 lg:px-0'>
             {/* Menu desktop */}
@@ -53,7 +53,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             </Button>
           </span>
         </TanStackQueryProvider>
-      </MedicoProvider>
+      {/* </MedicoProvider> */}
     </>
   )
 }

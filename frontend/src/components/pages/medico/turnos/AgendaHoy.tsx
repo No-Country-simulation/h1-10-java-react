@@ -45,7 +45,7 @@ interface MyJwtPayload extends JwtPayload {
 
 const AgendaHoy = () => {
   const [pacienteActivo, setPacienteActivo] = useState('')
-  const token = localStorage.getItem('token') || null
+  const token = window.localStorage.getItem('token') || null
 
   const decoded = jwtDecode<MyJwtPayload>(token ? token : '')
   const { isPending, error, data, refetch } = useQuery({
@@ -61,9 +61,12 @@ const AgendaHoy = () => {
 
   useEffect(() => {
     if (token) {
-      refetch() // Ejecutar la consulta manualmente cuando el token esté disponible
+      refetch()
     }
   }, [token, refetch])
+
+  console.log(data);
+  
 
   return (
     <TabsContent value='agendaHoy' className='w-full'>
@@ -71,8 +74,8 @@ const AgendaHoy = () => {
         <div className='aspect-square h-2 rounded-full bg-green-600'></div>
         <h3 className='text-xl font-bold'>27 de Julio de 2024</h3>
       </header>
-      <main className='flex w-full gap-6'>
-        <div className='flex-1'>
+      <main className='flex flex-col sm:flex-row w-full gap-6 '>
+        <div className='flex-1 order-2 sm:order-1'>
           {consultasHoy.map((consulta, index) => (
             <TurnoLinaeTiempoItem
               key={index}

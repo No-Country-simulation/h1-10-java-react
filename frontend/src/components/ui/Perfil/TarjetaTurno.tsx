@@ -9,7 +9,7 @@ export default function TarjetaTurno() {
         <p className='text-xs'>¿Necesitas programar uno?</p>
       </div>
       <Button className='ml-auto text-xs'>
-        <Link href='perfil/turno' >Programar turno</Link> </Button>
+        <Link href='/dashboard-paciente/perfil/turno' >Programar turno</Link> </Button>
     </section>
   )
 }

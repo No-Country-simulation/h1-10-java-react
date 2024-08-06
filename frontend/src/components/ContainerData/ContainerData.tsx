@@ -8,7 +8,7 @@ interface MyJwtPayload extends JwtPayload {
   id: string
 }
 
-const ContainerData = ({ children }: { children: React.ReactNode }) => {
+const ContainerData = ({ children, className = '' }: { children: React.ReactNode, className: string }) => {
 
   // const { dispatch, state } = useStaffContext()
  
@@ -45,7 +45,7 @@ const ContainerData = ({ children }: { children: React.ReactNode }) => {
   // }, [token, refetch])
 
   return (
-    <main className='flex-[2.5] overflow-hidden rounded-[30px] border-r border-gray-400 bg-white px-3 py-6 lg:p-6'>
+    <main className={`flex-[2.5] overflow-hidden rounded-[30px] border-r border-gray-400 bg-white px-3 py-6 lg:p-6 ${className}`}>
       {children}
     </main>
   )

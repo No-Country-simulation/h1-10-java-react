@@ -5,9 +5,13 @@ import TarjetaTurno from '@/components/ui/Perfil/TarjetaTurno'
 import { cn } from '@/lib/utils'
 import { CheckIcon, DeleteIcon } from 'lucide-react'
 import React, { useState,useEffect } from 'react'
+import Cancelarconsulta from '@/components/ui/Paciente/Cancelarconsulta'
+import { jwtDecode } from 'jwt-decode'
 
 const MainDashboard = () => {
   const [Turnos, setTurnos] = useState([])
+  const [cancelarTurno, setCancelarTurno] = useState(false)
+  const [idTurno, setidTurno]  = useState(0)
 // const [TratamientosRealizados,setTratamientosRealizados] = useState(0)
 // const [TratamientosPendientes,setTratamientosPendientes] = useState(0)
   
@@ -93,14 +97,20 @@ const MainDashboard = () => {
     setTratamientosPendientes(pendiente)
     setTratamientosRealizados(realizados)
   } */
-  useEffect(() => {
+    const [tokenAdmin, setTokenAdmin] = useState('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlzcyI6Imp1c3RpbmEuaW8iLCJpZCI6MSwiZXhwIjoxNzIzMTU5OTk2LCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl19.lTMF3HAVueNVs9k4blOjXC28f870VyaUCykqo8kivw8')
+ 
+  function Cancelar(id: number) {
+    setidTurno(id)
+    setCancelarTurno(!cancelarTurno)
+  }
+    useEffect(() => {
     const token = localStorage.getItem('token') ?? '';
-
+    const datosperfil  = jwtDecode(token)
     try {
-      void fetch('https://backend-justina-deploy.onrender.com/v1/api/appointment/getByPatient/2',{
+      void fetch(`https://backend-justina-deploy.onrender.com/v1/api/appointment/getByPatient/${datosperfil.id}`,{
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${tokenAdmin}`,
           'Content-Type': 'application/json'
         }
       }).then( async response => await response.json())
@@ -110,11 +120,11 @@ const MainDashboard = () => {
     }
   }, [])
   return (
-    <div>
+    <div className='min-h-screen'>
       <h4 className='text-3xl font-bold mb-6 text-center'>Inicio</h4>
       <TarjetaTurno />
-      {Turnos ? <h5>Turnos Programados</h5> : <h5>No tienes turnos programados</h5>}
-      <div className='grid gap-4 h-[500px] overflow-hidden overflow-y-scroll' style={{
+      {Turnos ? <h5 className='mb-4 font-bold'>Turnos Programados</h5> : <h5>No tienes turnos programados</h5>}
+      <div className='grid gap-4 h-[500px] overflow-hidden overflow-y-auto' style={{
         gridTemplateColumns: 'repeat(auto-fit, minmax(305px, 1fr))'
       }}>{Turnos.map((turno) => (
         <Card className={cn('', 'className')} /*{...props}*/ key={turno.id}>
@@ -148,12 +158,14 @@ const MainDashboard = () => {
             </div>
           </CardContent>
           <CardFooter>
-            <Button className='bg-red-600  mr-0 ml-auto'>
+            <Button className='bg-red-600  mr-0 ml-auto' onClick={()=> { Cancelar(turno.id) } }>
               <DeleteIcon className='mr-2 h-4 w-4' /> Cancelar consulta
             </Button>
           </CardFooter>
         </Card>
       ))}
+        {cancelarTurno &&
+          <Cancelarconsulta id={idTurno} fn={()=> setCancelarTurno(!cancelarTurno)}/>}
       </div>
       
     </div>

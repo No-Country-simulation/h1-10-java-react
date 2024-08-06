@@ -10,6 +10,7 @@ import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import {ObtenerHora} from '@/app/lib/Date'
+import { jwtDecode } from 'jwt-decode'
 const Formshema = z.object({
   descripcion: z.string().min(15, {
     message: 'Por favor la descripción tiene que ser mayor 15 caracteres'
@@ -20,7 +21,7 @@ const Formshema = z.object({
 })
 export default function Turno() {
   const [datosMedicos, setDatosMedicos] = useState([])
-
+  const [tokenAdmin, setTokenAdmin] = useState('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlzcyI6Imp1c3RpbmEuaW8iLCJpZCI6MSwiZXhwIjoxNzIzMTU5OTk2LCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl19.lTMF3HAVueNVs9k4blOjXC28f870VyaUCykqo8kivw8')
   const form = useForm<z.infer<typeof Formshema>>({
     resolver: zodResolver(Formshema),
     defaultValues: {
@@ -30,15 +31,16 @@ export default function Turno() {
   })
   function onSubmit( value:z.infer<typeof Formshema>) {
     const localToken = localStorage.getItem('token' ) ?? ''
+    const datosperfil  = jwtDecode(localToken)
     const [timeString] = ObtenerHora()
     console.log(timeString)
     const values = {
-      idPatient: '2',
+      idPatient: datosperfil.id,
       idMedicalStaff: value.idMedicalStaff,
       reason: 'SEGUIMIENTO',
       description: value.descripcion,
       healthCenter: 'Buenos Aires Medical Center',
-      date: `2024-08-02${timeString}.774Z`
+      date: `2024-10-28${timeString}`
     }
     console.log(value.idMedicalStaff)
     try {
@@ -46,7 +48,7 @@ export default function Turno() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${localToken}`
+          Authorization: `Bearer ${tokenAdmin}`
         },
         body: JSON.stringify(values)
 
@@ -73,7 +75,7 @@ export default function Turno() {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + localToken
+          Authorization: 'Bearer ' + tokenAdmin
         }
       })
         .then(async respuesta => await respuesta.json())

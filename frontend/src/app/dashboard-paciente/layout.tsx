@@ -16,9 +16,7 @@ import 'react-modern-drawer/dist/index.css'
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const rutasUser = [
     { texto: 'Inicio', href: '/dashboard-paciente', icon: <HomeIcon /> },
-    { texto: 'Perfil', href: '/dashboard-paciente/perfil', icon: <UserIcon /> },
-    { texto: 'Historial', href: '/dashboard-paciente/historial', icon: <HistoryIcon /> },
-    { texto: 'otros', href: '/dashboard-paciente/ventas', icon: <CodeIcon /> }
+    { texto: 'Perfil', href: '/dashboard-paciente/perfil', icon: <UserIcon /> }
   ]
 
   const [isOpen, setIsOpen] = useState(false)
@@ -53,7 +51,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               </Button>
             </span>}
         </Drawer>
-        <ContainerData>{children}</ContainerData>
+        <ContainerData className='min-h-screen'>{children}</ContainerData>
       </section>
       {!isOpen &&
         <span className='absolute top-4 z-50 right-4 lg:hidden'>

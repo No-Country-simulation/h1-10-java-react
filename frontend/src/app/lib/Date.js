@@ -4,14 +4,14 @@ export  function ObtenerHora() {
   // Obtener la hora, los minutos y los segundos
   const hours = now.getHours();
   const minutes = now.getMinutes();
-  const seconds = now.getSeconds();
+  
 
   // Formatear la hora para que siempre tenga dos dígitos
   const formattedHours = hours.toString().padStart(2, '0');
   const formattedMinutes = minutes.toString().padStart(2, '0');
-const formattedSeconds = seconds.toString().padStart(2, '0')
+
   // Combinar todo en un solo string
-  const timeString = `T${formattedHours}:${formattedMinutes}:${formattedSeconds}`
+  const timeString = `T${formattedHours}:${formattedMinutes}`
 
   return [timeString]
 }
